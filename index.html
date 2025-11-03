@@ -3,611 +3,384 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cartel TV</title>
+  <title>Cartel TV Premium</title>
   <meta name="description" content="Descubre películas en estreno, series en emisión, próximos estrenos, populares y más con Cartel TV, una plataforma gratuita, rápida y actualizada. Sin registro, sin permisos invasivos." />
   <link rel="canonical" href="https://carteltvsoporte.github.io/CartelTV/" />
+  
+  <!-- Meta tags PWA -->
+  <meta name="theme-color" content="#d4af37" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Cartel TV" />
+  <link rel="apple-touch-icon" href="icons/icon-192x192.png" />
+  <link rel="manifest" href="manifest.json" />
+  
+  <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Cartel TV" />
+  <meta property="og:title" content="Cartel TV Premium" />
   <meta property="og:description" content="Descubre películas en estreno, series en emisión, próximos estrenos, populares y más con Cartel TV, una plataforma gratuita, rápida y actualizada." />
   <meta property="og:image" content="https://github.com/carteltvsoporte/CartelTV/raw/refs/heads/main/TV.jpg" />
   <meta property="og:url" content="https://carteltvsoporte.github.io/CartelTV/" />
   <meta property="og:locale" content="es_ES" />
+  
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Cartel TV" />
+  <meta name="twitter:title" content="Cartel TV Premium" />
   <meta name="twitter:description" content="Descubre películas en estreno, series en emisión, próximos estrenos, populares y más con Cartel TV, una plataforma gratuita, rápida y actualizada." />
   <meta name="twitter:image" content="https://github.com/carteltvsoporte/CartelTV/raw/refs/heads/main/TV.jpg" />
+  
   <link rel="icon" href="https://github.com/carteltvsoporte/CartelTV/raw/refs/heads/main/TV.jpg" type="image/jpg" />
-  <style>
-    :root {
-      --primary: #d4af37;
-      --bg: #0a0a10;
-      --card-bg: #14141f;
-      --text: #f8f9fa;
-      --text-secondary: #adb5bd;
-      --text-muted: #6c757d;
-      --radius: 18px;
-      --success: #4ade80;
-      --border: #2d2d3a;
-      --shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
-      --glow: 0 0 12px rgba(212, 175, 55, 0.4);
-      --metallic: linear-gradient(135deg, #d4af37, #b8860b, #8b6f2a, #d4af37);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: radial-gradient(circle at 30% 20%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
-                  radial-gradient(circle at 80% 80%, rgba(50, 30, 10, 0.15) 0%, transparent 50%),
-                  linear-gradient(135deg, #1a1a25, #252535);
-      color: var(--text);
-      padding: 24px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      overflow-x: hidden;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 560px;
-    }
-
-    .top-bar {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 24px;
-      justify-content: center;
-    }
-
-    .logo-small {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      box-shadow: var(--glow), 0 4px 12px rgba(0,0,0,0.5);
-      animation: pulseGlow 3s infinite alternate;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .logo-small:hover {
-      transform: scale(1.1);
-    }
-
-    @keyframes pulseGlow {
-      0% { box-shadow: var(--glow), 0 4px 12px rgba(0,0,0,0.5); }
-      100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.6), 0 4px 12px rgba(0,0,0,0.5); }
-    }
-
-    h1 {
-      font-size: 2.2em;
-      margin-bottom: 24px;
-      text-align: center;
-      font-weight: 900;
-      letter-spacing: -0.8px;
-      text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
-      background: linear-gradient(to right, #ffffff, #d4af37);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      position: relative;
-    }
-
-    h1::after {
-      content: "";
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 3px;
-      background: var(--primary);
-      border-radius: 2px;
-    }
-
-    .filters {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .filter-btn {
-      padding: 10px 18px;
-      font-size: 0.94em;
-      background: rgba(30, 30, 40, 0.6);
-      color: var(--text-secondary);
-      border: 1px solid var(--border);
-      border-radius: 32px;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.3s ease;
-      font-weight: 600;
-    }
-
-    .filter-btn:hover {
-      background: rgba(255, 255, 255, 0.12);
-      color: #f8f9fa;
-      border-color: #d4af3766;
-    }
-
-    .filter-btn.active {
-      background: var(--metallic);
-      color: #0a0a10;
-      border: none;
-      font-weight: 800;
-      box-shadow: var(--glow), var(--shadow);
-      transform: translateY(-2px);
-    }
-
-    .status-bar {
-      font-size: 0.9em;
-      color: var(--text-muted);
-      text-align: center;
-      margin-bottom: 22px;
-      font-weight: 500;
-    }
-
-    .countdown {
-      color: var(--success);
-      font-weight: bold;
-    }
-
-    .action-btn {
-      width: 100%;
-      padding: 16px;
-      font-size: 1.2em;
-      font-weight: 800;
-      background: var(--metallic);
-      color: #0a0a10;
-      border: none;
-      border-radius: var(--radius);
-      cursor: pointer;
-      margin-bottom: 24px;
-      box-shadow: var(--shadow);
-      transition: all 0.25s ease;
-      letter-spacing: 0.5px;
-    }
-
-    .action-btn:hover,
-    .action-btn:focus {
-      background: linear-gradient(135deg, #e0b94a, #c9a030, #a88525, #e0b94a);
-      transform: translateY(-4px);
-      box-shadow: 0 16px 50px rgba(212, 175, 55, 0.5);
-      outline: none;
-    }
-
-    .action-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .loading {
-      text-align: center;
-      color: var(--text-secondary);
-      margin: 28px 0;
-      display: none;
-      font-style: italic;
-    }
-
-    .movie-card {
-      background: var(--card-bg);
-      padding: 24px;
-      border-radius: var(--radius);
-      text-align: center;
-      margin-bottom: 24px;
-      opacity: 0;
-      transform: translateY(15px);
-      transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.4s ease;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(212, 175, 55, 0.12);
-    }
-
-    .movie-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .movie-poster {
-      width: 100%;
-      max-width: 340px;
-      aspect-ratio: 2 / 3;
-      object-fit: cover;
-      border-radius: var(--radius);
-      background: #1a1a25;
-      margin: 0 auto 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-      transition: transform 0.3s ease;
-    }
-
-    .movie-card:hover .movie-poster {
-      transform: scale(1.02);
-    }
-
-    .movie-title {
-      font-size: 1.45em;
-      margin: 14px 0;
-      font-weight: 800;
-      color: #f8f9fa;
-    }
-
-    .movie-overview {
-      font-size: 1em;
-      line-height: 1.65;
-      color: var(--text-secondary);
-    }
-
-    .error {
-      color: #ff6b6b;
-      background: rgba(255, 107, 107, 0.1);
-      padding: 16px;
-      border-radius: var(--radius);
-      margin: 24px 0;
-      font-weight: 600;
-    }
-
-    .download-btn {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-      width: 100%;
-    }
-
-    .download-btn a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      background: linear-gradient(135deg, #1e1e2d, #2a2a3a);
-      color: var(--text);
-      text-decoration: none;
-      padding: 14px 24px;
-      border-radius: 36px;
-      font-size: 1em;
-      font-weight: 700;
-      transition: all 0.3s ease;
-      border: 1px solid var(--border);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-    }
-
-    .download-btn a:hover,
-    .download-btn a:focus {
-      background: linear-gradient(135deg, #2a2a3a, #353545);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-      outline: none;
-      border-color: #d4af3766;
-    }
-
-    .download-btn svg {
-      width: 22px;
-      height: 22px;
-      fill: var(--primary);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="container">
-    <div id="main-app" role="main" aria-live="polite">
-      <div class="top-bar" role="banner">
-        <a href="https://whatsapp.com/channel/0029Vb6sN8kL7UVSCeAQgA2f" target="_blank" rel="noopener noreferrer nofollow" aria-label="Ir al canal de Cartel TV en WhatsApp">
-          <img src="https://github.com/carteltvsoporte/CartelTV/raw/refs/heads/main/TV.jpg" alt="Cartel TV" class="logo-small" loading="lazy" />
-        </a>
+  <!-- Notificaciones -->
+  <div id="notification" class="notification hidden">
+    <span id="notification-text"></span>
+    <button id="notification-close" class="notification-close">×</button>
+  </div>
+
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="loading-screen">
+    <div class="loading-content">
+      <div class="loading-logo">
+        <div class="logo-glow"></div>
+        <span>🎬</span>
       </div>
-
-      <h1>🎬 Cartel TV</h1>
-
-      <div class="filters" role="radiogroup" aria-label="Filtrar contenido por tipo">
-        <button class="filter-btn active" data-type="now_playing" role="radio" aria-checked="true">En cines</button>
-        <button class="filter-btn" data-type="on_the_air" role="radio" aria-checked="false">Series ahora</button>
-        <button class="filter-btn" data-type="popular" role="radio" aria-checked="false">Populares</button>
-        <button class="filter-btn" data-type="upcoming" role="radio" aria-checked="false">Próximos</button>
-        <button class="filter-btn" data-type="top_rated" role="radio" aria-checked="false">Top</button>
-      </div>
-
-      <div class="status-bar" id="status-bar">
-        <span id="last-update"></span> • Próxima: <span id="countdown" class="countdown">--:--</span>
-      </div>
-
-      <button id="load-btn" class="action-btn" aria-label="Cargar una nueva recomendación">¿Qué ver?</button>
-
-      <div id="loading" class="loading" role="status">Cargando...</div>
-
-      <div id="movie-container" class="movie-card" role="region" aria-label="Contenido recomendado"></div>
-
-      <div class="download-btn">
-        <a href="https://carteltv.en.aptoide.com/" target="_blank" rel="noopener noreferrer nofollow" aria-label="Instalar Cartel TV desde Aptoide">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-          </svg>
-          Instalar desde Aptoide
-        </a>
+      <h2>Cartel TV Premium</h2>
+      <div class="loading-progress">
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+        <span class="loading-text">Cargando experiencia premium...</span>
       </div>
     </div>
   </div>
 
-  <script>
-    const CONFIG = {
-      API_KEY: '487ec2ee423ac20f42f80d2ee5aebab8',
-      BASE_URL: 'https://api.themoviedb.org/3',
-      IMG_BASE_URL: 'https://image.tmdb.org/t/p/w500',
-      MAX_RETRIES: 3,
-      INITIAL_DELAY: 1000,
-      AUTO_UPDATE_INTERVAL: 5 * 60 * 1000
-    };
+  <!-- Main App -->
+  <div class="container">
+    <div id="main-app" class="main-app hidden" role="main" aria-live="polite">
+      
+      <!-- Header Premium -->
+      <header class="app-header">
+        <div class="header-content">
+          <div class="header-left">
+            <button id="menu-btn" class="menu-btn" aria-label="Abrir menú">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+            <div class="logo-container">
+              <div class="logo-glow-small"></div>
+              <img src="https://github.com/carteltvsoporte/CartelTV/raw/refs/heads/main/TV.jpg" 
+                   alt="Cartel TV Premium" class="logo" loading="lazy" />
+            </div>
+          </div>
+          
+          <h1 class="app-title">
+            <span class="title-glow">🎬 Cartel TV</span>
+            <span class="premium-badge">PREMIUM</span>
+          </h1>
+          
+          <div class="header-actions">
+            <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
+              <span class="theme-icon">🌙</span>
+            </button>
+            <button id="install-btn" class="install-btn hidden" aria-label="Instalar aplicación">
+              <span class="install-icon">📱</span>
+            </button>
+          </div>
+        </div>
+      </header>
 
-    const State = {
-      currentType: 'now_playing',
-      currentAbortController: null,
-      autoUpdateTimer: null,
-      lastUpdate: null,
-      isPageVisible: true,
-      isLoading: false,
-      lastItem: null,
-      cache: {},
-      cacheExpiry: {},
-      contentSignatures: {}
-    };
+      <!-- Navigation Menu -->
+      <nav id="side-menu" class="side-menu">
+        <div class="menu-header">
+          <h3>Navegación</h3>
+          <button id="close-menu" class="close-menu" aria-label="Cerrar menú">×</button>
+        </div>
+        <div class="menu-items">
+          <a href="#" class="menu-item active" data-section="discover">
+            <span class="menu-icon">🔍</span>
+            Descubrir
+          </a>
+          <a href="#" class="menu-item" data-section="favorites">
+            <span class="menu-icon">❤️</span>
+            Favoritos
+          </a>
+          <a href="#" class="menu-item" data-section="watchlist">
+            <span class="menu-icon">📝</span>
+            Por Ver
+          </a>
+          <a href="#" class="menu-item" data-section="history">
+            <span class="menu-icon">🕒</span>
+            Historial
+          </a>
+          <a href="#" class="menu-item" data-section="settings">
+            <span class="menu-icon">⚙️</span>
+            Configuración
+          </a>
+        </div>
+        <div class="menu-footer">
+          <div class="user-stats">
+            <div class="stat">
+              <span class="stat-number" id="fav-count">0</span>
+              <span class="stat-label">Favoritos</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number" id="watch-count">0</span>
+              <span class="stat-label">Por Ver</span>
+            </div>
+          </div>
+        </div>
+      </nav>
 
-    function cleanup() {
-      if (State.currentAbortController) {
-        State.currentAbortController.abort();
-        State.currentAbortController = null;
-      }
-      if (State.autoUpdateTimer) {
-        clearTimeout(State.autoUpdateTimer);
-        State.autoUpdateTimer = null;
-      }
-    }
+      <!-- Main Content Sections -->
+      <div class="content-sections">
+        
+        <!-- Discover Section -->
+        <section id="discover" class="content-section active">
+          <div class="filters-container">
+            <div class="filters-header">
+              <h2>Descubre Contenido</h2>
+              <div class="filter-controls">
+                <button id="smart-filter" class="smart-filter" aria-label="Filtro inteligente">
+                  <span class="filter-icon">🤖</span>
+                  Modo Inteligente
+                </button>
+                <button id="shuffle-btn" class="shuffle-btn" aria-label="Mezclar contenido">
+                  <span class="shuffle-icon">🔀</span>
+                </button>
+              </div>
+            </div>
+            
+            <div class="filters" role="radiogroup" aria-label="Filtrar contenido por tipo">
+              <button class="filter-btn active" data-type="now_playing" role="radio" aria-checked="true">
+                <span class="filter-emoji">🎭</span>
+                En Cines
+              </button>
+              <button class="filter-btn" data-type="on_the_air" role="radio" aria-checked="false">
+                <span class="filter-emoji">📺</span>
+                Series Ahora
+              </button>
+              <button class="filter-btn" data-type="popular" role="radio" aria-checked="false">
+                <span class="filter-emoji">🔥</span>
+                Populares
+              </button>
+              <button class="filter-btn" data-type="upcoming" role="radio" aria-checked="false">
+                <span class="filter-emoji">🚀</span>
+                Próximos
+              </button>
+              <button class="filter-btn" data-type="top_rated" role="radio" aria-checked="false">
+                <span class="filter-emoji">⭐</span>
+                Top Rated
+              </button>
+              <button class="filter-btn" data-type="trending" role="radio" aria-checked="false">
+                <span class="filter-emoji">📈</span>
+                Trending
+              </button>
+            </div>
+          </div>
 
-    function formatTime(date) {
-      return new Intl.DateTimeFormat('es-ES', { hour: '2-digit', minute: '2-digit' }).format(date);
-    }
+          <div class="status-bar premium-status">
+            <div class="status-info">
+              <span id="last-update" class="update-time"></span>
+              <span class="status-divider">•</span>
+              <span class="status-text">Próxima actualización:</span>
+              <span id="countdown" class="countdown">--:--</span>
+            </div>
+            <div class="status-actions">
+              <button id="refresh-btn" class="refresh-btn" aria-label="Actualizar ahora">
+                <span class="refresh-icon">🔄</span>
+              </button>
+            </div>
+          </div>
 
-    async function fetchWithRetry(url, retries = CONFIG.MAX_RETRIES, delay = CONFIG.INITIAL_DELAY) {
-      for (let i = 0; i <= retries; i++) {
-        try {
-          const res = await fetch(url, {
-            signal: State.currentAbortController?.signal,
-            headers: { Accept: 'application/json' }
-          });
-          if (!res.ok) {
-            if (res.status === 429 && i < retries) {
-              await new Promise(r => setTimeout(r, delay * (2 ** i)));
-              continue;
-            }
-            throw new Error(`HTTP ${res.status}`);
-          }
-          return await res.json();
-        } catch (err) {
-          if (err.name === 'AbortError') throw err;
-          if (i === retries) throw err;
-          await new Promise(r => setTimeout(r, delay * (2 ** i)));
-        }
-      }
-    }
+          <button id="load-btn" class="action-btn premium-btn">
+            <span class="btn-icon">🎬</span>
+            <span class="btn-text">¿Qué Ver Hoy?</span>
+            <span class="btn-sparkle">✨</span>
+          </button>
 
-    function generateSignature(items, maxItems = 20) {
-      return items
-        .slice(0, maxItems)
-        .map(item => {
-          const id = item.id || 0;
-          const date = (item.release_date || item.first_air_date || '0000-00-00').substring(0, 10);
-          return `${id}-${date}`;
-        })
-        .sort()
-        .join('|');
-    }
+          <div id="loading" class="loading premium-loading">
+            <div class="loading-spinner"></div>
+            <span class="loading-message">Buscando recomendaciones premium...</span>
+          </div>
 
-    async function fetchContentByType(type) {
-      const now = Date.now();
-      const cacheValid = State.cache[type]?.length > 0 && now < State.cacheExpiry[type];
+          <div id="movie-container" class="movie-card premium-card" role="region" aria-label="Contenido recomendado">
+            <div class="welcome-message">
+              <div class="welcome-icon">🎭</div>
+              <h3>Bienvenido a Cartel TV Premium</h3>
+              <p>Haz clic en "¿Qué Ver Hoy?" para descubrir contenido exclusivo</p>
+            </div>
+          </div>
 
-      let language = 'es-ES';
-      let isCombined = false;
-      let rawData;
+          <div class="content-actions">
+            <button id="favorite-btn" class="content-action-btn favorite-btn" aria-label="Añadir a favoritos">
+              <span class="action-icon">❤️</span>
+              Favorito
+            </button>
+            <button id="watchlist-btn" class="content-action-btn watchlist-btn" aria-label="Añadir a por ver">
+              <span class="action-icon">📝</span>
+              Por Ver
+            </button>
+            <button id="share-btn" class="content-action-btn share-btn" aria-label="Compartir contenido">
+              <span class="action-icon">📤</span>
+              Compartir
+            </button>
+          </div>
+        </section>
 
-      switch (type) {
-        case 'now_playing':
-          rawData = (await fetchWithRetry(`${CONFIG.BASE_URL}/movie/now_playing?api_key=${CONFIG.API_KEY}&language=${language}&region=ES`)).results || [];
-          break;
-        case 'on_the_air':
-          rawData = (await fetchWithRetry(`${CONFIG.BASE_URL}/tv/on_the_air?api_key=${CONFIG.API_KEY}&language=${language}`)).results || [];
-          break;
-        case 'upcoming':
-          rawData = (await fetchWithRetry(`${CONFIG.BASE_URL}/movie/upcoming?api_key=${CONFIG.API_KEY}&language=${language}&region=ES`)).results || [];
-          break;
-        case 'popular':
-          isCombined = true;
-          const [popMovies, popTVs] = await Promise.all([
-            fetchWithRetry(`${CONFIG.BASE_URL}/movie/popular?api_key=${CONFIG.API_KEY}&language=${language}`),
-            fetchWithRetry(`${CONFIG.BASE_URL}/tv/popular?api_key=${CONFIG.API_KEY}&language=${language}`)
-          ]);
-          rawData = [...(popMovies.results || []), ...(popTVs.results || [])];
-          break;
-        case 'top_rated':
-          isCombined = true;
-          const [topMovies, topTVs] = await Promise.all([
-            fetchWithRetry(`${CONFIG.BASE_URL}/movie/top_rated?api_key=${CONFIG.API_KEY}&language=${language}`),
-            fetchWithRetry(`${CONFIG.BASE_URL}/tv/top_rated?api_key=${CONFIG.API_KEY}&language=${language}`)
-          ]);
-          rawData = [...(topMovies.results || []), ...(topTVs.results || [])];
-          break;
-        default:
-          throw new Error('Tipo no soportado');
-      }
+        <!-- Other Sections (Favorites, Watchlist, History, Settings) -->
+        <section id="favorites" class="content-section">
+          <div class="section-header">
+            <h2>Mis Favoritos</h2>
+            <p>Tu colección personal de contenido destacado</p>
+          </div>
+          <div id="favorites-grid" class="content-grid">
+            <div class="empty-state">
+              <span class="empty-icon">❤️</span>
+              <h3>No hay favoritos aún</h3>
+              <p>Los contenidos que marques como favoritos aparecerán aquí</p>
+            </div>
+          </div>
+        </section>
 
-      const valid = rawData.filter(item => item.poster_path && (item.title || item.name));
-      const newSignature = generateSignature(valid);
+        <section id="watchlist" class="content-section">
+          <div class="section-header">
+            <h2>Mi Lista por Ver</h2>
+            <p>Contenido guardado para ver más tarde</p>
+          </div>
+          <div id="watchlist-grid" class="content-grid">
+            <div class="empty-state">
+              <span class="empty-icon">📝</span>
+              <h3>Lista vacía</h3>
+              <p>Agrega contenido a tu lista para verlo después</p>
+            </div>
+          </div>
+        </section>
 
-      if (cacheValid && State.contentSignatures[type] !== newSignature) {
-        console.log(`🔍 Novedades detectadas en "${type}". Actualizando caché.`);
-      } else if (cacheValid) {
-        return State.cache[type];
-      }
+        <section id="history" class="content-section">
+          <div class="section-header">
+            <h2>Historial</h2>
+            <p>Tu actividad reciente en la plataforma</p>
+          </div>
+          <div id="history-list" class="history-list">
+            <div class="empty-state">
+              <span class="empty-icon">🕒</span>
+              <h3>Sin historial</h3>
+              <p>Tu actividad aparecerá aquí</p>
+            </div>
+          </div>
+        </section>
 
-      State.cache[type] = valid;
-      State.cacheExpiry[type] = now + 15 * 60 * 1000;
-      State.contentSignatures[type] = newSignature;
+        <section id="settings" class="content-section">
+          <div class="section-header">
+            <h2>Configuración</h2>
+            <p>Personaliza tu experiencia Cartel TV</p>
+          </div>
+          <div class="settings-grid">
+            <div class="setting-card">
+              <h3>🎨 Apariencia</h3>
+              <div class="setting-options">
+                <label class="setting-option">
+                  <input type="radio" name="theme" value="auto" checked>
+                  <span class="option-label">Automático</span>
+                </label>
+                <label class="setting-option">
+                  <input type="radio" name="theme" value="light">
+                  <span class="option-label">Claro</span>
+                </label>
+                <label class="setting-option">
+                  <input type="radio" name="theme" value="dark">
+                  <span class="option-label">Oscuro</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="setting-card">
+              <h3>🔔 Notificaciones</h3>
+              <div class="setting-options">
+                <label class="setting-option toggle-option">
+                  <input type="checkbox" id="notifications-toggle" checked>
+                  <span class="toggle-slider"></span>
+                  <span class="option-label">Recomendaciones diarias</span>
+                </label>
+                <label class="setting-option toggle-option">
+                  <input type="checkbox" id="updates-toggle" checked>
+                  <span class="toggle-slider"></span>
+                  <span class="option-label">Nuevos estrenos</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="setting-card">
+              <h3>🤖 Inteligencia</h3>
+              <div class="setting-options">
+                <label class="setting-option toggle-option">
+                  <input type="checkbox" id="smart-mode-toggle" checked>
+                  <span class="toggle-slider"></span>
+                  <span class="option-label">Modo inteligente</span>
+                </label>
+                <label class="setting-option">
+                  <select id="content-quality">
+                    <option value="high">Alta calidad</option>
+                    <option value="balanced" selected>Equilibrado</option>
+                    <option value="data">Modo ahorro</option>
+                  </select>
+                </label>
+              </div>
+            </div>
 
-      return valid;
-    }
+            <div class="setting-card">
+              <h3>📺 Fuentes de Contenido</h3>
+              <div class="setting-options">
+                <label class="setting-option toggle-option">
+                  <input type="checkbox" id="tvmaze-toggle" checked>
+                  <span class="toggle-slider"></span>
+                  <span class="option-label">Incluir TVmaze</span>
+                </label>
+                <div class="setting-description">
+                  <small>Mostrar series adicionales de TVmaze</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
 
-    async function getRandomContent(type) {
-      const items = await fetchContentByType(type);
-      if (items.length === 0) {
-        throw new Error('No hay contenido disponible en esta categoría.');
-      }
-      return items[Math.floor(Math.random() * items.length)];
-    }
+      <!-- Download Section -->
+      <footer class="app-footer">
+        <div class="download-section premium-download">
+          <h3>📱 App Cartel TV</h3>
+          <p>Experiencia completa en tu dispositivo</p>
+          <div class="download-btn">
+            <a href="https://github.com/carteltvsoporte/CartelTV/raw/refs/heads/main/Cartel%20TV.apk" 
+               class="download-link premium-download-link"
+               aria-label="Descargar Cartel TV APK desde GitHub">
+              <span class="download-icon">⬇️</span>
+              <span class="download-text">Descargar APK Premium</span>
+              <span class="download-badge">GRATIS</span>
+            </a>
+          </div>
+          <div class="pwa-features">
+            <div class="pwa-feature">
+              <span class="feature-icon">⚡</span>
+              <span>Rápido</span>
+            </div>
+            <div class="pwa-feature">
+              <span class="feature-icon">📱</span>
+              <span>Sin App Store</span>
+            </div>
+            <div class="pwa-feature">
+              <span class="feature-icon">🔒</span>
+              <span>Privado</span>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
 
-    function renderContent(item) {
-      const container = document.getElementById('movie-container');
-      container.innerHTML = '';
-
-      const img = document.createElement('img');
-      img.className = 'movie-poster';
-      img.src = `${CONFIG.IMG_BASE_URL}${item.poster_path}`;
-      img.alt = item.title ? `Póster de ${item.title}` : `Póster de ${item.name}`;
-      img.loading = 'lazy';
-      img.onerror = () => {
-        img.src = 'https://via.placeholder.com/340x510/1a1a25/6c757d?text=Sin+imagen';
-        img.alt = 'Imagen no disponible';
-      };
-
-      const title = document.createElement('div');
-      title.className = 'movie-title';
-      const name = item.title || item.name;
-      const dateField = item.release_date || item.first_air_date;
-      const year = dateField?.substring(0, 4) || 'N/A';
-      title.textContent = `${name} (${year})`;
-
-      const overview = document.createElement('p');
-      overview.className = 'movie-overview';
-      overview.textContent = item.overview?.trim() || 'Sin descripción disponible.';
-
-      container.appendChild(img);
-      container.appendChild(title);
-      container.appendChild(overview);
-      container.classList.add('visible');
-      State.lastItem = { item, type: State.currentType };
-    }
-
-    function renderError(message) {
-      const container = document.getElementById('movie-container');
-      container.innerHTML = `<div class="error">❌ ${message}</div>`;
-      container.classList.add('visible');
-    }
-
-    async function loadContent(isAuto = false) {
-      if (!State.isPageVisible && isAuto) return;
-      if (State.isLoading) return;
-      State.isLoading = true;
-      cleanup();
-      State.currentAbortController = new AbortController();
-
-      const btn = document.getElementById('load-btn');
-      const loading = document.getElementById('loading');
-      const container = document.getElementById('movie-container');
-
-      btn.disabled = true;
-      loading.style.display = 'block';
-      container.classList.remove('visible');
-
-      try {
-        const item = await getRandomContent(State.currentType);
-        renderContent(item);
-        State.lastUpdate = new Date();
-        document.getElementById('last-update').textContent = `Última: ${formatTime(State.lastUpdate)}`;
-        updateCountdown();
-      } catch (error) {
-        console.error('Error al cargar contenido:', error);
-        if (State.lastItem && !isAuto) {
-          renderContent(State.lastItem.item);
-        } else {
-          renderError(error.message || 'No se pudo cargar contenido.');
-        }
-      } finally {
-        loading.style.display = 'none';
-        btn.disabled = false;
-        State.isLoading = false;
-        if (isAuto) scheduleAutoUpdate();
-      }
-    }
-
-    function updateCountdown() {
-      if (!State.lastUpdate) {
-        document.getElementById('countdown').textContent = '--:--';
-        return;
-      }
-      const next = new Date(State.lastUpdate.getTime() + CONFIG.AUTO_UPDATE_INTERVAL);
-      const now = new Date();
-      if (next <= now) {
-        document.getElementById('countdown').textContent = '--:--';
-        return;
-      }
-      const diff = next - now;
-      const mins = Math.floor(diff / 60000);
-      const secs = Math.floor((diff % 60000) / 1000);
-      document.getElementById('countdown').textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-      setTimeout(updateCountdown, 1000);
-    }
-
-    function scheduleAutoUpdate() {
-      cleanup();
-      State.autoUpdateTimer = setTimeout(() => loadContent(true), CONFIG.AUTO_UPDATE_INTERVAL);
-      updateCountdown();
-    }
-
-    function initApp() {
-      document.addEventListener('visibilitychange', () => {
-        State.isPageVisible = !document.hidden;
-        if (State.isPageVisible && State.lastUpdate) {
-          const elapsed = Date.now() - State.lastUpdate.getTime();
-          const remaining = Math.max(0, CONFIG.AUTO_UPDATE_INTERVAL - elapsed);
-          if (!State.autoUpdateTimer) {
-            State.autoUpdateTimer = setTimeout(() => loadContent(true), remaining);
-          }
-        }
-      });
-
-      document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          if (btn.classList.contains('active')) return;
-          document.querySelectorAll('.filter-btn').forEach(b => {
-            b.classList.remove('active');
-            b.setAttribute('aria-checked', 'false');
-          });
-          btn.classList.add('active');
-          btn.setAttribute('aria-checked', 'true');
-          State.currentType = btn.dataset.type;
-          loadContent(false);
-        });
-      });
-
-      document.getElementById('load-btn').addEventListener('click', () => loadContent(false));
-
-      loadContent(false);
-      updateCountdown();
-
-      window.addEventListener('beforeunload', cleanup);
-    }
-
-    window.addEventListener('DOMContentLoaded', initApp);
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>

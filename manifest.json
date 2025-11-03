@@ -1,0 +1,33 @@
+{
+  "name": "Cartel TV Premium",
+  "short_name": "Cartel TV",
+  "description": "Descubre películas en estreno, series en emisión, próximos estrenos, populares y más con Cartel TV",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a10",
+  "theme_color": "#d4af37",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "es",
+  "categories": ["entertainment"],
+  "icons": [
+    {
+      "src": "https://github.com/carteltvsoporte/CartelTV/raw/refs/heads/main/TV.jpg",
+      "sizes": "192x192",
+      "type": "image/jpg"
+    },
+    {
+      "src": "https://github.com/carteltvsoporte/CartelTV/raw/refs/heads/main/TV.jpg",
+      "sizes": "512x512",
+      "type": "image/jpg"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://github.com/carteltvsoporte/CartelTV/raw/refs/heads/main/TV.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpg",
+      "form_factor": "wide"
+    }
+  ]
+}
