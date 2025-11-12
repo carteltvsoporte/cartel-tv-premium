@@ -1,387 +1,217 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cartel TV Premium</title>
-  <meta name="google-site-verification" content="P928CFIquv6IpuXI6hkWUouoK27E1t-EKYIJRAYHa0g" />
-  <meta name="description" content="Descubre películas en estreno, series en emisión, próximos estrenos, populares y más con Cartel TV, una plataforma gratuita, rápida y actualizada. Sin registro, sin permisos invasivos." />
-  <link rel="canonical" href="https://carteltvsoporte.github.io/CartelTV/" />
-  
-  <!-- Meta tags PWA -->
-  <meta name="theme-color" content="#d4af37" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Cartel TV" />
-  <link rel="apple-touch-icon" href="icons/icon-192x192.png" />
-  <link rel="manifest" href="manifest.json" />
-  
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Cartel TV Premium" />
-  <meta property="og:description" content="Descubre películas en estreno, series en emisión, próximos estrenos, populares y más con Cartel TV, una plataforma gratuita, rápida y actualizada." />
-  <meta property="og:image" content="https://github.com/carteltvsoporte/CartelTV/raw/refs/heads/main/TV.jpg" />
-  <meta property="og:url" content="https://carteltvsoporte.github.io/CartelTV/" />
-  <meta property="og:locale" content="es_ES" />
-  
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Cartel TV Premium" />
-  <meta name="twitter:description" content="Descubre películas en estreno, series en emisión, próximos estrenos, populares y más con Cartel TV, una plataforma gratuita, rápida y actualizada." />
-  <meta name="twitter:image" content="https://github.com/carteltvsoporte/CartelTV/raw/refs/heads/main/TV.jpg" />
-  
-  <link rel="icon" href="https://github.com/carteltvsoporte/CartelTV/raw/refs/heads/main/TV.jpg" type="image/jpg" />
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartel TV Premium - En Renovación</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c0c2e, #1a1a4a);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            background: rgba(15, 15, 40, 0.9);
+            border-radius: 16px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        
+        .logo h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(to right, #ffd166, #ff9e6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .logo span {
+            color: #a5a5ff;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 30px;
+        }
+        
+        .message h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #ffd166;
+        }
+        
+        .message p {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            color: #e0e0ff;
+        }
+        
+        .countdown {
+            background: rgba(30, 30, 70, 0.6);
+            border-radius: 12px;
+            padding: 25px 20px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .date {
+            font-size: 1.3rem;
+            margin: 15px 0;
+            color: #a5a5ff;
+            font-weight: 600;
+        }
+        
+        .timer {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .time-unit {
+            background: rgba(20, 20, 50, 0.8);
+            border-radius: 10px;
+            padding: 15px 10px;
+            min-width: 70px;
+            border: 1px solid rgba(255, 209, 102, 0.2);
+        }
+        
+        .time-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffd166;
+        }
+        
+        .time-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-top: 5px;
+            color: #a5a5ff;
+        }
+        
+        .contact {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .contact a {
+            color: #ffd166;
+            text-decoration: none;
+        }
+        
+        .contact a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .logo h1 {
+                font-size: 2.5rem;
+            }
+            
+            .message h2 {
+                font-size: 1.5rem;
+            }
+            
+            .timer {
+                gap: 8px;
+            }
+            
+            .time-unit {
+                min-width: 60px;
+                padding: 12px 8px;
+            }
+            
+            .time-value {
+                font-size: 1.7rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- Notificaciones -->
-  <div id="notification" class="notification hidden">
-    <span id="notification-text"></span>
-    <button id="notification-close" class="notification-close">×</button>
-  </div>
-
-  <!-- Loading Screen -->
-  <div id="loading-screen" class="loading-screen">
-    <div class="loading-content">
-      <div class="loading-logo">
-        <div class="logo-glow"></div>
-        <span>🎬</span>
-      </div>
-      <h2>Cartel TV Premium</h2>
-      <div class="loading-progress">
-        <div class="progress-bar">
-          <div class="progress-fill"></div>
+    <div class="container">
+        <div class="logo">
+            <h1>Cartel TV</h1>
+            <span>PREMIUM</span>
         </div>
-        <span class="loading-text">Cargando experiencia premium...</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Main App -->
-  <div class="container">
-    <div id="main-app" class="main-app hidden" role="main" aria-live="polite">
-      
-      <!-- Header Premium -->
-      <header class="app-header">
-        <div class="header-content">
-          <div class="header-left">
-            <button id="menu-btn" class="menu-btn" aria-label="Abrir menú">
-              <span></span>
-              <span></span>
-              <span></span>
-            </button>
-            <div class="logo-container">
-              <div class="logo-glow-small"></div>
-              <img src="https://github.com/carteltvsoporte/CartelTV/raw/refs/heads/main/TV.jpg" 
-                   alt="Cartel TV Premium" class="logo" loading="lazy" />
-            </div>
-          </div>
-          
-          <h1 class="app-title">
-            <span class="title-glow">🎬 Cartel TV</span>
-            <span class="premium-badge">PREMIUM</span>
-          </h1>
-          
-          <div class="header-actions">
-            <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
-              <span class="theme-icon">🌙</span>
-            </button>
-            <button id="install-btn" class="install-btn hidden" aria-label="Instalar aplicación">
-              <span class="install-icon">📱</span>
-            </button>
-          </div>
-        </div>
-      </header>
-
-      <!-- Navigation Menu -->
-      <nav id="side-menu" class="side-menu">
-        <div class="menu-header">
-          <h3>Navegación</h3>
-          <button id="close-menu" class="close-menu" aria-label="Cerrar menú">×</button>
-        </div>
-        <div class="menu-items">
-          <a href="#" class="menu-item active" data-section="discover">
-            <span class="menu-icon">🔍</span>
-            Descubrir
-          </a>
-          <a href="#" class="menu-item" data-section="favorites">
-            <span class="menu-icon">❤️</span>
-            Favoritos
-          </a>
-          <a href="#" class="menu-item" data-section="watchlist">
-            <span class="menu-icon">📝</span>
-            Por Ver
-          </a>
-          <a href="#" class="menu-item" data-section="history">
-            <span class="menu-icon">🕒</span>
-            Historial
-          </a>
-          <a href="#" class="menu-item" data-section="settings">
-            <span class="menu-icon">⚙️</span>
-            Configuración
-          </a>
-        </div>
-        <div class="menu-footer">
-          <div class="user-stats">
-            <div class="stat">
-              <span class="stat-number" id="fav-count">0</span>
-              <span class="stat-label">Favoritos</span>
-            </div>
-            <div class="stat">
-              <span class="stat-number" id="watch-count">0</span>
-              <span class="stat-label">Por Ver</span>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      <!-- Main Content Sections -->
-      <div class="content-sections">
         
-        <!-- Discover Section -->
-        <section id="discover" class="content-section active">
-          <div class="filters-container">
-            <div class="filters-header">
-              <h2>Descubre Contenido</h2>
-              <div class="filter-controls">
-                <button id="smart-filter" class="smart-filter" aria-label="Filtro inteligente">
-                  <span class="filter-icon">🤖</span>
-                  Modo Inteligente
-                </button>
-                <button id="shuffle-btn" class="shuffle-btn" aria-label="Mezclar contenido">
-                  <span class="shuffle-icon">🔀</span>
-                </button>
-              </div>
-            </div>
-            
-            <div class="filters" role="radiogroup" aria-label="Filtrar contenido por tipo">
-              <button class="filter-btn active" data-type="now_playing" role="radio" aria-checked="true">
-                <span class="filter-emoji">🎭</span>
-                En Cines
-              </button>
-              <button class="filter-btn" data-type="on_the_air" role="radio" aria-checked="false">
-                <span class="filter-emoji">📺</span>
-                Series Ahora
-              </button>
-              <button class="filter-btn" data-type="popular" role="radio" aria-checked="false">
-                <span class="filter-emoji">🔥</span>
-                Populares
-              </button>
-              <button class="filter-btn" data-type="upcoming" role="radio" aria-checked="false">
-                <span class="filter-emoji">🚀</span>
-                Próximos
-              </button>
-              <button class="filter-btn" data-type="top_rated" role="radio" aria-checked="false">
-                <span class="filter-emoji">⭐</span>
-                Top Rated
-              </button>
-              <button class="filter-btn" data-type="trending" role="radio" aria-checked="false">
-                <span class="filter-emoji">📈</span>
-                Trending
-              </button>
-            </div>
-          </div>
-
-          <div class="status-bar premium-status">
-            <div class="status-info">
-              <span id="last-update" class="update-time"></span>
-              <span class="status-divider">•</span>
-              <span class="status-text">Próxima actualización:</span>
-              <span id="countdown" class="countdown">--:--</span>
-            </div>
-            <div class="status-actions">
-              <button id="refresh-btn" class="refresh-btn" aria-label="Actualizar ahora">
-                <span class="refresh-icon">🔄</span>
-              </button>
-            </div>
-          </div>
-
-          <button id="load-btn" class="action-btn premium-btn">
-            <span class="btn-icon">🎬</span>
-            <span class="btn-text">¿Qué Ver Hoy?</span>
-            <span class="btn-sparkle">✨</span>
-          </button>
-
-          <div id="loading" class="loading premium-loading">
-            <div class="loading-spinner"></div>
-            <span class="loading-message">Buscando recomendaciones premium...</span>
-          </div>
-
-          <div id="movie-container" class="movie-card premium-card" role="region" aria-label="Contenido recomendado">
-            <div class="welcome-message">
-              <div class="welcome-icon">🎭</div>
-              <h3>Bienvenido a Cartel TV Premium</h3>
-              <p>Haz clic en "¿Qué Ver Hoy?" para descubrir contenido exclusivo</p>
-            </div>
-          </div>
-
-          <div class="content-actions">
-            <button id="favorite-btn" class="content-action-btn favorite-btn" aria-label="Añadir a favoritos">
-              <span class="action-icon">❤️</span>
-              Favorito
-            </button>
-            <button id="watchlist-btn" class="content-action-btn watchlist-btn" aria-label="Añadir a por ver">
-              <span class="action-icon">📝</span>
-              Por Ver
-            </button>
-            <button id="share-btn" class="content-action-btn share-btn" aria-label="Compartir contenido">
-              <span class="action-icon">📤</span>
-              Compartir
-            </button>
-          </div>
-        </section>
-
-        <!-- Other Sections (Favorites, Watchlist, History, Settings) -->
-        <section id="favorites" class="content-section">
-          <div class="section-header">
-            <h2>Mis Favoritos</h2>
-            <p>Tu colección personal de contenido destacado</p>
-          </div>
-          <div id="favorites-grid" class="content-grid">
-            <div class="empty-state">
-              <span class="empty-icon">❤️</span>
-              <h3>No hay favoritos aún</h3>
-              <p>Los contenidos que marques como favoritos aparecerán aquí</p>
-            </div>
-          </div>
-        </section>
-
-        <section id="watchlist" class="content-section">
-          <div class="section-header">
-            <h2>Mi Lista por Ver</h2>
-            <p>Contenido guardado para ver más tarde</p>
-          </div>
-          <div id="watchlist-grid" class="content-grid">
-            <div class="empty-state">
-              <span class="empty-icon">📝</span>
-              <h3>Lista vacía</h3>
-              <p>Agrega contenido a tu lista para verlo después</p>
-            </div>
-          </div>
-        </section>
-
-        <section id="history" class="content-section">
-          <div class="section-header">
-            <h2>Historial</h2>
-            <p>Tu actividad reciente en la plataforma</p>
-          </div>
-          <div id="history-list" class="history-list">
-            <div class="empty-state">
-              <span class="empty-icon">🕒</span>
-              <h3>Sin historial</h3>
-              <p>Tu actividad aparecerá aquí</p>
-            </div>
-          </div>
-        </section>
-
-        <section id="settings" class="content-section">
-          <div class="section-header">
-            <h2>Configuración</h2>
-            <p>Personaliza tu experiencia Cartel TV</p>
-          </div>
-          <div class="settings-grid">
-            <div class="setting-card">
-              <h3>🎨 Apariencia</h3>
-              <div class="setting-options">
-                <label class="setting-option">
-                  <input type="radio" name="theme" value="auto" checked>
-                  <span class="option-label">Automático</span>
-                </label>
-                <label class="setting-option">
-                  <input type="radio" name="theme" value="light">
-                  <span class="option-label">Claro</span>
-                </label>
-                <label class="setting-option">
-                  <input type="radio" name="theme" value="dark">
-                  <span class="option-label">Oscuro</span>
-                </label>
-              </div>
-            </div>
-            
-            <div class="setting-card">
-              <h3>🔔 Notificaciones</h3>
-              <div class="setting-options">
-                <label class="setting-option toggle-option">
-                  <input type="checkbox" id="notifications-toggle" checked>
-                  <span class="toggle-slider"></span>
-                  <span class="option-label">Recomendaciones diarias</span>
-                </label>
-                <label class="setting-option toggle-option">
-                  <input type="checkbox" id="updates-toggle" checked>
-                  <span class="toggle-slider"></span>
-                  <span class="option-label">Nuevos estrenos</span>
-                </label>
-              </div>
-            </div>
-            
-            <div class="setting-card">
-              <h3>🤖 Inteligencia</h3>
-              <div class="setting-options">
-                <label class="setting-option toggle-option">
-                  <input type="checkbox" id="smart-mode-toggle" checked>
-                  <span class="toggle-slider"></span>
-                  <span class="option-label">Modo inteligente</span>
-                </label>
-                <label class="setting-option">
-                  <select id="content-quality">
-                    <option value="high">Alta calidad</option>
-                    <option value="balanced" selected>Equilibrado</option>
-                    <option value="data">Modo ahorro</option>
-                  </select>
-                </label>
-              </div>
-            </div>
-
-            <div class="setting-card">
-              <h3>📺 Fuentes de Contenido</h3>
-              <div class="setting-options">
-                <label class="setting-option toggle-option">
-                  <input type="checkbox" id="tvmaze-toggle" checked>
-                  <span class="toggle-slider"></span>
-                  <span class="option-label">Incluir TVmaze</span>
-                </label>
-                <div class="setting-description">
-                  <small>Mostrar series adicionales de TVmaze</small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <!-- Download Section -->
-      <footer class="app-footer">
-        <div class="download-section premium-download">
-          <h3>📱 App Cartel TV</h3>
-          <p>Experiencia completa en tu dispositivo</p>
-          <div class="download-btn">
-            <a href="https://github.com/carteltvsoporte/CartelTV/raw/refs/heads/main/Cartel%20TV.apk" 
-               class="download-link premium-download-link"
-               aria-label="Descargar Cartel TV APK desde GitHub">
-              <span class="download-icon">⬇️</span>
-              <span class="download-text">Descargar APK Premium</span>
-              <span class="download-badge">GRATIS</span>
-            </a>
-          </div>
-          <div class="pwa-features">
-            <div class="pwa-feature">
-              <span class="feature-icon">⚡</span>
-              <span>Rápido</span>
-            </div>
-            <div class="pwa-feature">
-              <span class="feature-icon">📱</span>
-              <span>Sin App Store</span>
-            </div>
-            <div class="pwa-feature">
-              <span class="feature-icon">🔒</span>
-              <span>Privado</span>
-            </div>
-          </div>
+        <div class="message">
+            <h2>Estamos en Renovación</h2>
+            <p>Estamos trabajando para ofrecerte una experiencia premium mejorada.</p>
+            <p>Volvemos el <strong>15 de Noviembre, 2025</strong></p>
         </div>
-      </footer>
+        
+        <div class="countdown">
+            <div class="date">Tiempo restante:</div>
+            <div class="timer">
+                <div class="time-unit">
+                    <div class="time-value" id="days">00</div>
+                    <div class="time-label">Días</div>
+                </div>
+                <div class="time-unit">
+                    <div class="time-value" id="hours">00</div>
+                    <div class="time-label">Horas</div>
+                </div>
+                <div class="time-unit">
+                    <div class="time-value" id="minutes">00</div>
+                    <div class="time-label">Minutos</div>
+                </div>
+                <div class="time-unit">
+                    <div class="time-value" id="seconds">00</div>
+                    <div class="time-label">Segundos</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="contact">
+            <p>Consultas: <a href="mailto:carteltv.soporte@gmail.com">carteltv.soporte@gmail.com</a></p>
+        </div>
     </div>
-  </div>
 
-  <script src="script.js"></script>
+    <script>
+        const returnDate = new Date('November 15, 2025 00:00:00').getTime();
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const timeLeft = returnDate - now;
+            
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            
+            if (timeLeft < 0) {
+                clearInterval(countdownInterval);
+                document.querySelector('.countdown').innerHTML = '<div class="date">¡Ya estamos de vuelta!</div>';
+            }
+        }
+        
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
 </body>
 </html>
