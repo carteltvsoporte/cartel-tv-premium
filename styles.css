@@ -95,6 +95,11 @@ body {
   font-size: 1rem;
 }
 
+.modal-content input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
 .modal-content button {
   width: 100%;
   padding: 0.75rem;

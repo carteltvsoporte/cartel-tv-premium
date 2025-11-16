@@ -10,6 +10,19 @@ const CONFIG = {
   ACCESS_CODE: 'TV2025'
 };
 
+const AUTHORIZED_USERS = [
+  { name: "Ana García López", phone: "612345678", password: "Ana2024!" },
+  { name: "Carlos Martínez Ruiz", phone: "623456789", password: "Carlos#123" },
+  { name: "María Fernández Sol", phone: "634567890", password: "Maria$456" },
+  { name: "José Rodríguez Mar", phone: "645678901", password: "Jose789%" },
+  { name: "Laura Sánchez Gil", phone: "656789012", password: "Laura&012" },
+  { name: "David Pérez Torres", phone: "667890123", password: "David345@" },
+  { name: "Elena Gómez Díaz", phone: "678901234", password: "Elena678!" },
+  { name: "Miguel López Vega", phone: "689012345", password: "Miguel901#" },
+  { name: "Sofía Martín Castro", phone: "690123456", password: "Sofia234$" },
+  { name: "Javier Romero Navarro", phone: "601234567", password: "Javier567%" }
+];
+
 const State = {
   currentType: 'now_playing',
   currentAbortController: null,
@@ -30,7 +43,9 @@ const State = {
 
 function setupAccessModal() {
   const accessModal = document.getElementById('access-modal');
-  const accessCodeInput = document.getElementById('access-code');
+  const accessNameInput = document.getElementById('access-name');
+  const accessPhoneInput = document.getElementById('access-phone');
+  const accessPasswordInput = document.getElementById('access-password');
   const submitButton = document.getElementById('submit-code');
   const errorMessage = document.getElementById('error-message');
   
@@ -42,24 +57,42 @@ function setupAccessModal() {
   }
   
   submitButton.addEventListener('click', () => {
-    const enteredCode = accessCodeInput.value.trim();
+    const enteredName = accessNameInput.value.trim();
+    const enteredPhone = accessPhoneInput.value.trim();
+    const enteredPassword = accessPasswordInput.value.trim();
     
-    if (enteredCode === CONFIG.ACCESS_CODE) {
+    if (!enteredName || !enteredPhone || !enteredPassword) {
+      errorMessage.textContent = 'Todos los campos son obligatorios';
+      errorMessage.classList.remove('hidden');
+      return;
+    }
+    
+    const isValidUser = AUTHORIZED_USERS.some(user => 
+      user.name.toLowerCase() === enteredName.toLowerCase() &&
+      user.phone === enteredPhone &&
+      user.password === enteredPassword
+    );
+    
+    if (isValidUser) {
       localStorage.setItem('cartel_access_granted', 'true');
+      localStorage.setItem('cartel_user_name', enteredName);
       accessModal.classList.add('hidden');
       document.getElementById('main-app').classList.remove('hidden');
-      showNotification('Acceso concedido');
+      showNotification(`Bienvenido/a, ${enteredName}`);
     } else {
+      errorMessage.textContent = 'Credenciales incorrectas. Verifique sus datos.';
       errorMessage.classList.remove('hidden');
-      accessCodeInput.value = '';
-      accessCodeInput.focus();
+      accessPasswordInput.value = '';
+      accessPasswordInput.focus();
     }
   });
   
-  accessCodeInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      submitButton.click();
-    }
+  [accessNameInput, accessPhoneInput, accessPasswordInput].forEach(input => {
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        submitButton.click();
+      }
+    });
   });
 }
 
