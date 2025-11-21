@@ -15,7 +15,6 @@
       <p>Ingrese sus datos para continuar:</p>
       <input type="text" id="access-name" placeholder="Nombre completo" />
       <input type="tel" id="access-phone" placeholder="Número móvil" />
-      <input type="password" id="access-password" placeholder="Contraseña" />
       <button id="submit-code">Acceder</button>
       <p id="error-message" class="error hidden">Credenciales incorrectas. Intente nuevamente.</p>
     </div>
@@ -86,6 +85,7 @@
             </div>
             
             <div class="categories">
+              <!-- PELÍCULAS -->
               <div class="category-section">
                 <h3 class="category-title">🎬 Películas</h3>
                 <div class="filters">
@@ -93,13 +93,31 @@
                   <button class="filter-btn" data-type="popular_movies">Populares</button>
                   <button class="filter-btn" data-type="top_rated_movies">Mejor Valoradas</button>
                   <button class="filter-btn" data-type="upcoming">Próximamente</button>
-                  <button class="filter-btn" data-type="action">Acción</button>
-                  <button class="filter-btn" data-type="comedy">Comedia</button>
-                  <button class="filter-btn" data-type="drama">Drama</button>
-                  <button class="filter-btn" data-type="documentary">Documental</button>
+                  <button class="filter-btn" data-type="trending_movies">Tendencia</button>
+                  <button class="filter-btn" data-type="latest_movies">Más Recientes</button>
                 </div>
               </div>
 
+              <!-- GÉNEROS PELÍCULAS -->
+              <div class="category-section">
+                <h3 class="category-title">🎭 Géneros - Películas</h3>
+                <div class="filters">
+                  <button class="filter-btn" data-type="action">Acción</button>
+                  <button class="filter-btn" data-type="comedy">Comedia</button>
+                  <button class="filter-btn" data-type="drama">Drama</button>
+                  <button class="filter-btn" data-type="thriller">Thriller</button>
+                  <button class="filter-btn" data-type="horror">Terror</button>
+                  <button class="filter-btn" data-type="romance">Romance</button>
+                  <button class="filter-btn" data-type="scifi">Ciencia Ficción</button>
+                  <button class="filter-btn" data-type="fantasy">Fantasía</button>
+                  <button class="filter-btn" data-type="adventure">Aventura</button>
+                  <button class="filter-btn" data-type="animation">Animación</button>
+                  <button class="filter-btn" data-type="documentary">Documental</button>
+                  <button class="filter-btn" data-type="family">Familiar</button>
+                </div>
+              </div>
+
+              <!-- SERIES -->
               <div class="category-section">
                 <h3 class="category-title">📺 Series</h3>
                 <div class="filters">
@@ -107,18 +125,61 @@
                   <button class="filter-btn" data-type="popular_tv">Populares</button>
                   <button class="filter-btn" data-type="top_rated_tv">Mejor Valoradas</button>
                   <button class="filter-btn" data-type="airing_today">Hoy en TV</button>
-                  <button class="filter-btn" data-type="tvmaze_shows">TVmaze Series</button>
-                  <button class="filter-btn" data-type="tvmaze_schedule">Programación TV</button>
+                  <button class="filter-btn" data-type="trending_tv">Tendencia</button>
+                  <button class="filter-btn" data-type="latest_tv">Más Recientes</button>
                 </div>
               </div>
 
+              <!-- GÉNEROS SERIES -->
               <div class="category-section">
-                <h3 class="category-title">🚀 Próximas Novedades</h3>
+                <h3 class="category-title">📡 Géneros - Series</h3>
                 <div class="filters">
-                  <button class="filter-btn" data-type="trending">Tendencia</button>
+                  <button class="filter-btn" data-type="tv_drama">Drama</button>
+                  <button class="filter-btn" data-type="tv_comedy">Comedia</button>
+                  <button class="filter-btn" data-type="tv_action">Acción</button>
+                  <button class="filter-btn" data-type="tv_scifi">Ciencia Ficción</button>
+                  <button class="filter-btn" data-type="tv_fantasy">Fantasía</button>
+                  <button class="filter-btn" data-type="tv_crime">Crimen</button>
+                  <button class="filter-btn" data-type="tv_mystery">Misterio</button>
+                  <button class="filter-btn" data-type="tv_animation">Animación</button>
+                  <button class="filter-btn" data-type="tv_reality">Reality</button>
+                </div>
+              </div>
+
+              <!-- CONTENIDO EXCLUSIVO -->
+              <div class="category-section">
+                <h3 class="category-title">💎 Contenido Exclusivo</h3>
+                <div class="filters">
+                  <button class="filter-btn" data-type="tvmaze_shows">TVmaze Series</button>
+                  <button class="filter-btn" data-type="tvmaze_schedule">Programación TV</button>
+                  <button class="filter-btn" data-type="netflix_originals">Netflix Originals</button>
+                  <button class="filter-btn" data-type="disney_originals">Disney+</button>
+                  <button class="filter-btn" data-type="hbo_originals">HBO Max</button>
+                  <button class="filter-btn" data-type="prime_originals">Prime Video</button>
+                </div>
+              </div>
+
+              <!-- NOVEDADES Y TENDENCIAS -->
+              <div class="category-section">
+                <h3 class="category-title">🚀 Novedades y Tendencias</h3>
+                <div class="filters">
+                  <button class="filter-btn" data-type="trending_all">Tendencia Total</button>
                   <button class="filter-btn" data-type="upcoming_movies">Películas Próximas</button>
                   <button class="filter-btn" data-type="upcoming_tv">Series Próximas</button>
-                  <button class="filter-btn" data-type="latest">Más Recientes</button>
+                  <button class="filter-btn" data-type="weekly_trending">Tendencia Semanal</button>
+                  <button class="filter-btn" data-type="daily_trending">Tendencia Diaria</button>
+                </div>
+              </div>
+
+              <!-- CLÁSICOS Y CULTOS -->
+              <div class="category-section">
+                <h3 class="category-title">🏛️ Clásicos y Cultos</h3>
+                <div class="filters">
+                  <button class="filter-btn" data-type="classic_movies">Clásicos</button>
+                  <button class="filter-btn" data-type="cult_movies">Culto</button>
+                  <button class="filter-btn" data-type="award_winners">Ganadores Premios</button>
+                  <button class="filter-btn" data-type="indie_movies">Independientes</button>
+                  <button class="filter-btn" data-type="foreign_movies">Cine Extranjero</button>
                 </div>
               </div>
             </div>

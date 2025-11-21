@@ -11,16 +11,10 @@ const CONFIG = {
 };
 
 const AUTHORIZED_USERS = [
-  { name: "Marcos", phone: "+5350369270", password: "CTVP" },
-  { name: "Carlos Martínez Ruiz", phone: "623456789", password: "Carlos#123" },
-  { name: "María Fernández Sol", phone: "634567890", password: "Maria$456" },
-  { name: "José Rodríguez Mar", phone: "645678901", password: "Jose789%" },
-  { name: "Laura Sánchez Gil", phone: "656789012", password: "Laura&012" },
-  { name: "David Pérez Torres", phone: "667890123", password: "David345@" },
-  { name: "Elena Gómez Díaz", phone: "678901234", password: "Elena678!" },
-  { name: "Miguel López Vega", phone: "689012345", password: "Miguel901#" },
-  { name: "Sofía Martín Castro", phone: "690123456", password: "Sofia234$" },
-  { name: "Javier Romero Navarro", phone: "601234567", password: "Javier567%" }
+  { name: "Marcos", phone: "50369270" },
+  { name: "Carlos Martínez", phone: "623456789" },
+  { name: "María Fernández", phone: "634567890" },
+  { name: "José Rodríguez", phone: "645678901" },
 ];
 
 const State = {
@@ -45,7 +39,6 @@ function setupAccessModal() {
   const accessModal = document.getElementById('access-modal');
   const accessNameInput = document.getElementById('access-name');
   const accessPhoneInput = document.getElementById('access-phone');
-  const accessPasswordInput = document.getElementById('access-password');
   const submitButton = document.getElementById('submit-code');
   const errorMessage = document.getElementById('error-message');
   
@@ -59,9 +52,8 @@ function setupAccessModal() {
   submitButton.addEventListener('click', () => {
     const enteredName = accessNameInput.value.trim();
     const enteredPhone = accessPhoneInput.value.trim();
-    const enteredPassword = accessPasswordInput.value.trim();
     
-    if (!enteredName || !enteredPhone || !enteredPassword) {
+    if (!enteredName || !enteredPhone) {
       errorMessage.textContent = 'Todos los campos son obligatorios';
       errorMessage.classList.remove('hidden');
       return;
@@ -69,8 +61,7 @@ function setupAccessModal() {
     
     const isValidUser = AUTHORIZED_USERS.some(user => 
       user.name.toLowerCase() === enteredName.toLowerCase() &&
-      user.phone === enteredPhone &&
-      user.password === enteredPassword
+      user.phone === enteredPhone
     );
     
     if (isValidUser) {
@@ -82,12 +73,12 @@ function setupAccessModal() {
     } else {
       errorMessage.textContent = 'Credenciales incorrectas. Verifique sus datos.';
       errorMessage.classList.remove('hidden');
-      accessPasswordInput.value = '';
-      accessPasswordInput.focus();
+      accessPhoneInput.value = '';
+      accessPhoneInput.focus();
     }
   });
   
-  [accessNameInput, accessPhoneInput, accessPasswordInput].forEach(input => {
+  [accessNameInput, accessPhoneInput].forEach(input => {
     input.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
         submitButton.click();
@@ -617,6 +608,76 @@ async function fetchContentByType(type) {
         rawData = upcomingMovies.results || [];
         break;
         
+      case 'trending_movies':
+        const trendingMovies = await fetchWithRetry(`${CONFIG.BASE_URL}/trending/movie/week?api_key=${CONFIG.TMDB_API_KEY}&language=${language}`);
+        rawData = trendingMovies.results || [];
+        break;
+
+      case 'latest_movies':
+        const latestMovies = await fetchWithRetry(`${CONFIG.BASE_URL}/movie/latest?api_key=${CONFIG.TMDB_API_KEY}&language=${language}`);
+        rawData = [latestMovies].filter(item => item && item.title);
+        break;
+
+      case 'action':
+        const action = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/movie?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=28`);
+        rawData = action.results || [];
+        break;
+
+      case 'comedy':
+        const comedy = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/movie?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=35`);
+        rawData = comedy.results || [];
+        break;
+
+      case 'drama':
+        const drama = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/movie?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=18`);
+        rawData = drama.results || [];
+        break;
+
+      case 'thriller':
+        const thriller = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/movie?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=53`);
+        rawData = thriller.results || [];
+        break;
+
+      case 'horror':
+        const horror = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/movie?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=27`);
+        rawData = horror.results || [];
+        break;
+
+      case 'romance':
+        const romance = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/movie?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=10749`);
+        rawData = romance.results || [];
+        break;
+
+      case 'scifi':
+        const scifi = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/movie?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=878`);
+        rawData = scifi.results || [];
+        break;
+
+      case 'fantasy':
+        const fantasy = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/movie?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=14`);
+        rawData = fantasy.results || [];
+        break;
+
+      case 'adventure':
+        const adventure = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/movie?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=12`);
+        rawData = adventure.results || [];
+        break;
+
+      case 'animation':
+        const animation = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/movie?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=16`);
+        rawData = animation.results || [];
+        break;
+
+      case 'documentary':
+        const documentary = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/movie?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=99`);
+        rawData = documentary.results || [];
+        break;
+
+      case 'family':
+        const family = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/movie?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=10751`);
+        rawData = family.results || [];
+        break;
+
       case 'on_the_air':
         const [tmdbOnAir, tvmazeSchedule] = await Promise.all([
           fetchWithRetry(`${CONFIG.BASE_URL}/tv/on_the_air?api_key=${CONFIG.TMDB_API_KEY}&language=${language}`),
@@ -647,9 +708,64 @@ async function fetchContentByType(type) {
         rawData = airingToday.results || [];
         break;
 
+      case 'trending_tv':
+        const trendingTV = await fetchWithRetry(`${CONFIG.BASE_URL}/trending/tv/week?api_key=${CONFIG.TMDB_API_KEY}&language=${language}`);
+        rawData = trendingTV.results || [];
+        break;
+
+      case 'latest_tv':
+        const latestTV = await fetchWithRetry(`${CONFIG.BASE_URL}/tv/latest?api_key=${CONFIG.TMDB_API_KEY}&language=${language}`);
+        rawData = [latestTV].filter(item => item && item.name);
+        break;
+
       case 'upcoming_tv':
         const upcomingTV = await fetchWithRetry(`${CONFIG.BASE_URL}/tv/on_the_air?api_key=${CONFIG.TMDB_API_KEY}&language=${language}`);
         rawData = upcomingTV.results || [];
+        break;
+
+      case 'tv_drama':
+        const tvDrama = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/tv?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=18`);
+        rawData = tvDrama.results || [];
+        break;
+
+      case 'tv_comedy':
+        const tvComedy = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/tv?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=35`);
+        rawData = tvComedy.results || [];
+        break;
+
+      case 'tv_action':
+        const tvAction = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/tv?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=10759`);
+        rawData = tvAction.results || [];
+        break;
+
+      case 'tv_scifi':
+        const tvScifi = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/tv?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=10765`);
+        rawData = tvScifi.results || [];
+        break;
+
+      case 'tv_fantasy':
+        const tvFantasy = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/tv?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=10765`);
+        rawData = tvFantasy.results || [];
+        break;
+
+      case 'tv_crime':
+        const tvCrime = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/tv?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=80`);
+        rawData = tvCrime.results || [];
+        break;
+
+      case 'tv_mystery':
+        const tvMystery = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/tv?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=9648`);
+        rawData = tvMystery.results || [];
+        break;
+
+      case 'tv_animation':
+        const tvAnimation = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/tv?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=16`);
+        rawData = tvAnimation.results || [];
+        break;
+
+      case 'tv_reality':
+        const tvReality = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/tv?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=10764`);
+        rawData = tvReality.results || [];
         break;
         
       case 'tvmaze_shows':
@@ -659,41 +775,68 @@ async function fetchContentByType(type) {
       case 'tvmaze_schedule':
         rawData = State.settings.includeTVmaze ? await fetchTVmazeSchedule() : [];
         break;
-        
-      case 'trending':
-        const [trendingMovies, trendingTVs] = await Promise.all([
+
+      case 'netflix_originals':
+        const netflix = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/tv?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_networks=213`);
+        rawData = netflix.results || [];
+        break;
+
+      case 'disney_originals':
+        const disney = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/tv?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_networks=2739`);
+        rawData = disney.results || [];
+        break;
+
+      case 'hbo_originals':
+        const hbo = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/tv?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_networks=49`);
+        rawData = hbo.results || [];
+        break;
+
+      case 'prime_originals':
+        const prime = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/tv?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_networks=1024`);
+        rawData = prime.results || [];
+        break;
+
+      case 'trending_all':
+        const [trendingAllMovies, trendingAllTVs] = await Promise.all([
           fetchWithRetry(`${CONFIG.BASE_URL}/trending/movie/week?api_key=${CONFIG.TMDB_API_KEY}&language=${language}`),
           fetchWithRetry(`${CONFIG.BASE_URL}/trending/tv/week?api_key=${CONFIG.TMDB_API_KEY}&language=${language}`)
         ]);
-        rawData = [...(trendingMovies.results || []), ...(trendingTVs.results || [])];
+        rawData = [...(trendingAllMovies.results || []), ...(trendingAllTVs.results || [])];
         break;
 
-      case 'latest':
-        const [latestMovies, latestTV] = await Promise.all([
-          fetchWithRetry(`${CONFIG.BASE_URL}/movie/latest?api_key=${CONFIG.TMDB_API_KEY}&language=${language}`),
-          fetchWithRetry(`${CONFIG.BASE_URL}/tv/latest?api_key=${CONFIG.TMDB_API_KEY}&language=${language}`)
-        ]);
-        rawData = [latestMovies, latestTV].filter(item => item && (item.title || item.name));
+      case 'weekly_trending':
+        const weeklyTrending = await fetchWithRetry(`${CONFIG.BASE_URL}/trending/all/week?api_key=${CONFIG.TMDB_API_KEY}&language=${language}`);
+        rawData = weeklyTrending.results || [];
         break;
 
-      case 'action':
-        const action = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/movie?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=28`);
-        rawData = action.results || [];
+      case 'daily_trending':
+        const dailyTrending = await fetchWithRetry(`${CONFIG.BASE_URL}/trending/all/day?api_key=${CONFIG.TMDB_API_KEY}&language=${language}`);
+        rawData = dailyTrending.results || [];
         break;
 
-      case 'comedy':
-        const comedy = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/movie?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=35`);
-        rawData = comedy.results || [];
+      case 'classic_movies':
+        const classic = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/movie?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&primary_release_date.lte=1990&sort_by=vote_average.desc`);
+        rawData = classic.results || [];
         break;
 
-      case 'drama':
-        const drama = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/movie?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=18`);
-        rawData = drama.results || [];
+      case 'cult_movies':
+        const cult = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/movie?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_keywords=viewed&sort_by=vote_count.desc`);
+        rawData = cult.results || [];
         break;
 
-      case 'documentary':
-        const documentary = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/movie?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=99`);
-        rawData = documentary.results || [];
+      case 'award_winners':
+        const awards = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/movie?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_keywords=award&sort_by=vote_average.desc`);
+        rawData = awards.results || [];
+        break;
+
+      case 'indie_movies':
+        const indie = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/movie?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_genres=18&with_original_language=en&without_keywords=hollywood`);
+        rawData = indie.results || [];
+        break;
+
+      case 'foreign_movies':
+        const foreign = await fetchWithRetry(`${CONFIG.BASE_URL}/discover/movie?api_key=${CONFIG.TMDB_API_KEY}&language=${language}&with_original_language=es&region=ES`);
+        rawData = foreign.results || [];
         break;
         
       default:
