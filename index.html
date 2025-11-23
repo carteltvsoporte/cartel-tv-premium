@@ -6,16 +6,17 @@
   <title>CTVP</title>
   <meta name="description" content="Descubre películas y series organizadas por categorías" />
   <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="https://github.com/carteltvsoporte/cartel-tv-premium/raw/refs/heads/main/TV.jpeg" type="image/jpeg">
+  <link rel="icon" href="CTVP.jpeg" type="image/jpeg">
 </head>
 <body>
   <div id="access-modal" class="modal">
     <div class="modal-content">
-      <h2>Acceso Premium</h2>
+      <h2>CTVP</h2>
       <p>Ingrese sus datos para continuar:</p>
       <input type="text" id="access-name" placeholder="Nombre completo" />
       <input type="tel" id="access-phone" placeholder="Número móvil" />
       <button id="submit-code">Acceder</button>
+      <button id="subscribe-btn" class="subscribe-btn">📧 Quiero Inscribirme</button>
       <p id="error-message" class="error hidden">Credenciales incorrectas. Intente nuevamente.</p>
     </div>
   </div>
@@ -37,7 +38,7 @@
               <span></span>
             </button>
             <div class="logo">
-              <img src="https://github.com/carteltvsoporte/cartel-tv-premium/raw/refs/heads/main/TV.jpeg" alt="Cartel TV" class="logo-img">
+              <img src="CTVP.jpeg" alt="Cartel TV" class="logo-img">
               <span class="logo-text">CTVP</span>
             </div>
           </div>
@@ -85,7 +86,6 @@
             </div>
             
             <div class="categories">
-              <!-- PELÍCULAS -->
               <div class="category-section">
                 <h3 class="category-title">🎬 Películas</h3>
                 <div class="filters">
@@ -98,7 +98,6 @@
                 </div>
               </div>
 
-              <!-- GÉNEROS PELÍCULAS -->
               <div class="category-section">
                 <h3 class="category-title">🎭 Géneros - Películas</h3>
                 <div class="filters">
@@ -117,7 +116,6 @@
                 </div>
               </div>
 
-              <!-- SERIES -->
               <div class="category-section">
                 <h3 class="category-title">📺 Series</h3>
                 <div class="filters">
@@ -130,7 +128,6 @@
                 </div>
               </div>
 
-              <!-- GÉNEROS SERIES -->
               <div class="category-section">
                 <h3 class="category-title">📡 Géneros - Series</h3>
                 <div class="filters">
@@ -146,7 +143,6 @@
                 </div>
               </div>
 
-              <!-- CONTENIDO EXCLUSIVO -->
               <div class="category-section">
                 <h3 class="category-title">💎 Contenido Exclusivo</h3>
                 <div class="filters">
@@ -159,7 +155,6 @@
                 </div>
               </div>
 
-              <!-- NOVEDADES Y TENDENCIAS -->
               <div class="category-section">
                 <h3 class="category-title">🚀 Novedades y Tendencias</h3>
                 <div class="filters">
@@ -171,7 +166,6 @@
                 </div>
               </div>
 
-              <!-- CLÁSICOS Y CULTOS -->
               <div class="category-section">
                 <h3 class="category-title">🏛️ Clásicos y Cultos</h3>
                 <div class="filters">
@@ -261,6 +255,26 @@
                     <option value="high">Alta calidad</option>
                     <option value="balanced" selected>Equilibrado</option>
                     <option value="data">Modo ahorro</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+
+            <div class="setting-card">
+              <h3>🌐 Traducción</h3>
+              <div class="setting-options">
+                <label class="setting-option toggle-option">
+                  <input type="checkbox" id="translation-toggle">
+                  <span class="toggle-slider"></span>
+                  <span class="option-label">Traducir contenido</span>
+                </label>
+                <label class="setting-option">
+                  <select id="translation-language">
+                    <option value="en">Inglés</option>
+                    <option value="fr">Francés</option>
+                    <option value="de">Alemán</option>
+                    <option value="it">Italiano</option>
+                    <option value="pt">Portugués</option>
                   </select>
                 </label>
               </div>

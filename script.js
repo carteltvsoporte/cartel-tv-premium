@@ -1,13 +1,18 @@
 const CONFIG = {
   TMDB_API_KEY: 'cdf9b6a0255cebc133ce4d9aaaee8d6d',
   TVMAZE_API_KEY: 'zA6qewWidZMGR1slbPXX-REnvSJ02VG2',
+  OMDB_API_KEY: 'b9a8f8a8',
+  TRANSLATION_API_KEY: 'trnsl.1.1.20211001T000000Z.1234567890abcdef.1234567890abcdef',
   BASE_URL: 'https://api.themoviedb.org/3',
   TVMAZE_BASE_URL: 'https://api.tvmaze.com',
+  OMDB_BASE_URL: 'https://www.omdbapi.com',
+  TRANSLATION_BASE_URL: 'https://translate.yandex.net/api/v1.5/tr.json/translate',
   IMG_BASE_URL: 'https://image.tmdb.org/t/p/w500',
   MAX_RETRIES: 3,
   INITIAL_DELAY: 1000,
   CACHE_DURATION: 15 * 60 * 1000,
-  ACCESS_CODE: 'TV2025'
+  ACCESS_CODE: 'TV2025',
+  API_ROTATION_INTERVAL: 5000
 };
 
 const AUTHORIZED_USERS = [
@@ -30,9 +35,13 @@ const State = {
   settings: JSON.parse(localStorage.getItem('cartel_settings')) || {
     theme: 'azul',
     contentQuality: 'balanced',
-    includeTVmaze: true
+    includeTVmaze: true,
+    translationEnabled: false,
+    translationLanguage: 'en'
   },
-  isOnline: navigator.onLine
+  isOnline: navigator.onLine,
+  currentApiIndex: 0,
+  lastApiCall: 0
 };
 
 function setupAccessModal() {
@@ -40,6 +49,7 @@ function setupAccessModal() {
   const accessNameInput = document.getElementById('access-name');
   const accessPhoneInput = document.getElementById('access-phone');
   const submitButton = document.getElementById('submit-code');
+  const subscribeBtn = document.getElementById('subscribe-btn');
   const errorMessage = document.getElementById('error-message');
   
   const hasAccess = localStorage.getItem('cartel_access_granted');
@@ -76,6 +86,19 @@ function setupAccessModal() {
       accessPhoneInput.value = '';
       accessPhoneInput.focus();
     }
+  });
+  
+  subscribeBtn.addEventListener('click', () => {
+    const name = accessNameInput.value.trim() || 'Usuario interesado';
+    const phone = accessPhoneInput.value.trim() || 'No proporcionado';
+    
+    const subject = 'Solicitud de inscripción - CTVP';
+    const body = `Hola, me interesa inscribirme en CTVP Premium.\n\nNombre: ${name}\nTeléfono: ${phone}\n\nPor favor contáctenme con más información.`;
+    
+    const mailtoLink = `mailto:carteltv.soporte@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open(mailtoLink, '_blank');
+    
+    showNotification('Redirigiendo a Gmail para inscripción...');
   });
   
   [accessNameInput, accessPhoneInput].forEach(input => {
@@ -146,13 +169,28 @@ function setupSettings() {
     tvmazeToggle.checked = State.settings.includeTVmaze;
     tvmazeToggle.addEventListener('change', saveSettings);
   }
+  
+  const translationToggle = document.getElementById('translation-toggle');
+  const translationLanguage = document.getElementById('translation-language');
+  
+  if (translationToggle) {
+    translationToggle.checked = State.settings.translationEnabled;
+    translationToggle.addEventListener('change', saveSettings);
+  }
+  
+  if (translationLanguage) {
+    translationLanguage.value = State.settings.translationLanguage;
+    translationLanguage.addEventListener('change', saveSettings);
+  }
 }
 
 function saveSettings() {
   State.settings = {
     theme: document.querySelector('input[name="theme"]:checked')?.value || 'azul',
     contentQuality: document.getElementById('content-quality')?.value || 'balanced',
-    includeTVmaze: document.getElementById('tvmaze-toggle')?.checked || true
+    includeTVmaze: document.getElementById('tvmaze-toggle')?.checked || true,
+    translationEnabled: document.getElementById('translation-toggle')?.checked || false,
+    translationLanguage: document.getElementById('translation-language')?.value || 'en'
   };
   
   localStorage.setItem('cartel_settings', JSON.stringify(State.settings));
@@ -475,9 +513,23 @@ function cleanup() {
   }
 }
 
+function canUseApi() {
+  const now = Date.now();
+  if (now - State.lastApiCall < CONFIG.API_ROTATION_INTERVAL) {
+    return false;
+  }
+  State.lastApiCall = now;
+  return true;
+}
+
 async function fetchWithRetry(url, retries = CONFIG.MAX_RETRIES, delay = CONFIG.INITIAL_DELAY) {
   for (let i = 0; i <= retries; i++) {
     try {
+      if (!canUseApi()) {
+        await new Promise(r => setTimeout(r, CONFIG.API_ROTATION_INTERVAL));
+        continue;
+      }
+      
       const res = await fetch(url, {
         signal: State.currentAbortController?.signal,
         headers: { Accept: 'application/json' }
@@ -497,6 +549,34 @@ async function fetchWithRetry(url, retries = CONFIG.MAX_RETRIES, delay = CONFIG.
       if (i === retries) throw err;
       await new Promise(r => setTimeout(r, delay * (2 ** i)));
     }
+  }
+}
+
+async function fetchOMDBDetails(imdbId) {
+  try {
+    const url = `${CONFIG.OMDB_BASE_URL}/?i=${imdbId}&apikey=${CONFIG.OMDB_API_KEY}`;
+    const data = await fetchWithRetry(url);
+    return data;
+  } catch (error) {
+    console.error('Error fetching OMDB details:', error);
+    return null;
+  }
+}
+
+async function translateText(text, targetLang) {
+  if (!text || !State.settings.translationEnabled) return text;
+  
+  try {
+    const url = `${CONFIG.TRANSLATION_BASE_URL}?key=${CONFIG.TRANSLATION_API_KEY}&text=${encodeURIComponent(text)}&lang=${targetLang}`;
+    const response = await fetchWithRetry(url);
+    
+    if (response && response.text && response.text.length > 0) {
+      return response.text[0];
+    }
+    return text;
+  } catch (error) {
+    console.error('Translation error:', error);
+    return text;
   }
 }
 
@@ -869,7 +949,7 @@ async function getContentByType(type) {
   return items;
 }
 
-function renderContent(item) {
+async function renderContent(item) {
   const container = document.getElementById('movie-container');
   if (!container) return;
   
@@ -884,7 +964,14 @@ function renderContent(item) {
     img.src = `${CONFIG.IMG_BASE_URL}${item.poster_path}`;
   }
   
-  const title = item.title || item.name;
+  let title = item.title || item.name;
+  let overview = item.overview?.trim() || 'Sin descripción disponible.';
+  
+  if (State.settings.translationEnabled) {
+    title = await translateText(title, State.settings.translationLanguage);
+    overview = await translateText(overview, State.settings.translationLanguage);
+  }
+  
   img.alt = `Póster de ${title}`;
   img.loading = 'lazy';
   img.onerror = () => {
@@ -900,9 +987,9 @@ function renderContent(item) {
   const sourceBadge = item.source === 'tvmaze' ? ' 📺' : '';
   titleElement.textContent = `${title} (${year})${sourceBadge}`;
 
-  const overview = document.createElement('p');
-  overview.className = 'movie-overview';
-  overview.textContent = item.overview?.trim() || 'Sin descripción disponible.';
+  const overviewElement = document.createElement('p');
+  overviewElement.className = 'movie-overview';
+  overviewElement.textContent = overview;
 
   container.appendChild(img);
   container.appendChild(titleElement);
@@ -910,14 +997,17 @@ function renderContent(item) {
   if (item.episode) {
     const episodeInfo = document.createElement('div');
     episodeInfo.className = 'episode-info';
-    episodeInfo.innerHTML = `
-      <strong>Episodio:</strong> ${item.episode.name} 
-      (T${item.episode.season} E${item.episode.number})
-    `;
+    let episodeText = `<strong>Episodio:</strong> ${item.episode.name} (T${item.episode.season} E${item.episode.number})`;
+    
+    if (State.settings.translationEnabled) {
+      episodeText = await translateText(episodeText, State.settings.translationLanguage);
+    }
+    
+    episodeInfo.innerHTML = episodeText;
     container.appendChild(episodeInfo);
   }
   
-  container.appendChild(overview);
+  container.appendChild(overviewElement);
   
   State.lastItem = { item, type: State.currentType };
   addToHistory(item, 'viewed');
@@ -960,7 +1050,7 @@ async function loadContent() {
     const items = await getContentByType(State.currentType);
     if (items.length > 0) {
       const randomIndex = Math.floor(Math.random() * items.length);
-      renderContent(items[randomIndex]);
+      await renderContent(items[randomIndex]);
       showNotification('Contenido cargado correctamente');
     } else {
       renderError('No se encontró contenido en esta categoría');
