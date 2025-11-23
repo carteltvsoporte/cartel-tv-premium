@@ -1,349 +1,102 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CTVP - Descubre Películas y Series por Categorías</title>
-  <meta name="description" content="Descubre películas y series organizadas por categorías. Plataforma de streaming con contenido exclusivo y recomendaciones personalizadas." />
-  <meta name="keywords" content="películas, series, streaming, categorías películas, CTVP, cine, TV, películas online, series online, entretenimiento">
-  <meta name="author" content="CTVP">
-  <meta name="robots" content="index, follow">
-  <meta name="googlebot" content="index, follow">
-  <meta name="bingbot" content="index, follow">
-  <meta name="slurp" content="index, follow">
-  
-  <!-- Open Graph -->
-  <meta property="og:title" content="CTVP - Descubre Películas y Series">
-  <meta property="og:description" content="Plataforma para descubrir películas y series organizadas por categorías">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://carteltvsoporte.github.io/ctvp/">
-  <meta property="og:image" content="https://github.com/carteltvsoporte/ctvp/raw/refs/heads/main/CTVP.jpeg">
-  <meta property="og:site_name" content="CTVP">
-  
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="CTVP - Descubre Películas y Series">
-  <meta name="twitter:description" content="Plataforma para descubrir películas y series organizadas por categorías">
-  <meta name="twitter:image" content="https://github.com/carteltvsoporte/ctvp/raw/refs/heads/main/CTVP.jpeg">
-  
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://carteltvsoporte.github.io/ctvp/" />
-  
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="https://github.com/carteltvsoporte/ctvp/raw/refs/heads/main/CTVP.jpeg" type="image/jpeg">
-  
-  <!-- Schema.org Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "CTVP",
-    "description": "Descubre películas y series organizadas por categorías",
-    "url": "https://carteltvsoporte.github.io/ctvp/",
-    "applicationCategory": "EntertainmentApplication",
-    "operatingSystem": "Web Browser",
-    "permissions": "browser",
-    "author": {
-      "@type": "Organization",
-      "name": "CTVP",
-      "url": "https://carteltvsoporte.github.io/ctvp/"
-    },
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    }
-  }
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTVP - Plataforma</title>
+    <meta name="description" content="CTVP - Tu plataforma de entretenimiento">
+    <link rel="icon" type="image/jpeg" href="https://github.com/carteltvsoporte/ctvp/raw/refs/heads/main/CTVP.jpeg">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="access-modal" class="modal">
-    <div class="modal-content">
-      <h2>CTVP</h2>
-      <p>Ingrese sus datos para continuar:</p>
-      <input type="text" id="access-name" placeholder="Nombre completo" />
-      <input type="tel" id="access-phone" placeholder="Número móvil" />
-      <button id="submit-code">Acceder</button>
-      <button id="subscribe-btn" class="subscribe-btn">📧 Quiero Inscribirme</button>
-      <p id="error-message" class="error hidden">Credenciales incorrectas. Intente nuevamente.</p>
-    </div>
-  </div>
-
-  <div id="notification" class="notification hidden">
-    <span id="notification-text"></span>
-    <button id="notification-close" class="notification-close">×</button>
-  </div>
-
-  <div class="container">
-    <div id="main-app" class="main-app hidden">
-      
-      <header class="app-header">
-        <div class="header-content">
-          <div class="header-left">
-            <button id="menu-btn" class="menu-btn" aria-label="Abrir menú de navegación">
-              <span></span>
-              <span></span>
-              <span></span>
-            </button>
+    <header>
+        <div class="header-container">
             <div class="logo">
-              <img src="https://github.com/carteltvsoporte/ctvp/raw/refs/heads/main/CTVP.jpeg" alt="CTVP - Plataforma de Películas y Series" class="logo-img" loading="lazy">
-              <span class="logo-text">CTVP</span>
+                <img src="https://github.com/carteltvsoporte/ctvp/raw/refs/heads/main/CTVP.jpeg" alt="CTVP Logo" class="logo-img">
+                <h1>CTVP</h1>
             </div>
-          </div>
-          
-          <div class="header-actions">
-            <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
-              <span class="theme-icon">💎</span>
+            
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Buscar..." aria-label="Buscar contenido">
+                <button id="search-button" aria-label="Buscar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <use href="#search-icon"></use>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="user-info" id="user-info">
+                <button class="btn-logout" id="logout-btn">Cerrar Sesión</button>
+            </div>
+            
+            <button class="nav-toggle" id="nav-toggle" aria-label="Menú">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <use href="#menu-icon"></use>
+                </svg>
             </button>
-          </div>
         </div>
-      </header>
-
-      <nav id="side-menu" class="side-menu" aria-label="Navegación principal">
-        <div class="menu-header">
-          <h3>Navegación</h3>
-          <button id="close-menu" class="close-menu" aria-label="Cerrar menú">×</button>
+    </header>
+    
+    <nav>
+        <div class="nav-container" id="nav-container">
+            <div class="nav-item active" data-category="popular" data-type="movie">Populares</div>
+            <div class="nav-item" data-category="now_playing" data-type="movie">En Cines</div>
+            <div class="nav-item" data-category="top_rated" data-type="movie">Mejor Valoradas</div>
+            <div class="nav-item" data-category="upcoming" data-type="movie">Próximamente</div>
+            <div class="nav-item" data-category="popular" data-type="tv">Series TV</div>
+            <div class="nav-item" data-category="top_rated" data-type="tv">Series Mejor Valoradas</div>
         </div>
-        <div class="menu-items">
-          <a href="#discover" class="menu-item active" data-section="discover">🔍 Descubrir</a>
-          <a href="#favorites" class="menu-item" data-section="favorites">❤️ Favoritos</a>
-          <a href="#watchlist" class="menu-item" data-section="watchlist">📝 Por Ver</a>
-          <a href="#history" class="menu-item" data-section="history">🕒 Historial</a>
-          <a href="#settings" class="menu-item" data-section="settings">⚙️ Configuración</a>
-        </div>
-        <div class="menu-footer">
-          <div class="user-stats">
-            <div class="stat">
-              <span class="stat-number" id="fav-count">0</span>
-              <span class="stat-label">Favoritos</span>
+    </nav>
+    
+    <main id="main-content">
+        <section id="content-section">
+            <div class="section-title">
+                <h2 id="section-title">Contenido Destacado</h2>
             </div>
-            <div class="stat">
-              <span class="stat-number" id="watch-count">0</span>
-              <span class="stat-label">Por Ver</span>
+            <div class="content-grid" id="content-grid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
             </div>
-          </div>
-        </div>
-      </nav>
+        </section>
+    </main>
 
-      <main class="content-sections">
-        
-        <section id="discover" class="content-section active" aria-labelledby="discover-title">
-          <div class="filters-container">
-            <div class="filters-header">
-              <h2 id="discover-title">CATEGORIAS</h2>
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="search-icon" viewBox="0 0 24 24">
+            <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" stroke-width="2"/>
+        </symbol>
+        <symbol id="menu-icon" viewBox="0 0 24 24">
+            <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2"/>
+        </symbol>
+        <symbol id="close-icon" viewBox="0 0 24 24">
+            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2"/>
+        </symbol>
+        <symbol id="star-icon" viewBox="0 0 24 24">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
+        </symbol>
+    </svg>
+
+    <div class="modal" id="detail-modal" role="dialog" aria-labelledby="modal-title">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close" aria-label="Cerrar">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <use href="#close-icon"></use>
+                </svg>
+            </button>
+            
+            <div class="modal-header">
+                <img src="" alt="" class="modal-backdrop" id="modal-backdrop">
+                <img src="" alt="" class="modal-poster" id="modal-poster">
             </div>
             
-            <div class="categories">
-              <div class="category-section">
-                <h3 class="category-title">🎬 Películas</h3>
-                <div class="filters">
-                  <button class="filter-btn active" data-type="now_playing">En Cines</button>
-                  <button class="filter-btn" data-type="popular_movies">Populares</button>
-                  <button class="filter-btn" data-type="top_rated_movies">Mejor Valoradas</button>
-                  <button class="filter-btn" data-type="upcoming">Próximamente</button>
-                  <button class="filter-btn" data-type="trending_movies">Tendencia</button>
-                  <button class="filter-btn" data-type="latest_movies">Más Recientes</button>
-                </div>
-              </div>
-
-              <div class="category-section">
-                <h3 class="category-title">🎭 Géneros - Películas</h3>
-                <div class="filters">
-                  <button class="filter-btn" data-type="action">Acción</button>
-                  <button class="filter-btn" data-type="comedy">Comedia</button>
-                  <button class="filter-btn" data-type="drama">Drama</button>
-                  <button class="filter-btn" data-type="thriller">Thriller</button>
-                  <button class="filter-btn" data-type="horror">Terror</button>
-                  <button class="filter-btn" data-type="romance">Romance</button>
-                  <button class="filter-btn" data-type="scifi">Ciencia Ficción</button>
-                  <button class="filter-btn" data-type="fantasy">Fantasía</button>
-                  <button class="filter-btn" data-type="adventure">Aventura</button>
-                  <button class="filter-btn" data-type="animation">Animación</button>
-                  <button class="filter-btn" data-type="documentary">Documental</button>
-                  <button class="filter-btn" data-type="family">Familiar</button>
-                </div>
-              </div>
-
-              <div class="category-section">
-                <h3 class="category-title">📺 Series</h3>
-                <div class="filters">
-                  <button class="filter-btn" data-type="on_the_air">En Emisión</button>
-                  <button class="filter-btn" data-type="popular_tv">Populares</button>
-                  <button class="filter-btn" data-type="top_rated_tv">Mejor Valoradas</button>
-                  <button class="filter-btn" data-type="airing_today">Hoy en TV</button>
-                  <button class="filter-btn" data-type="trending_tv">Tendencia</button>
-                  <button class="filter-btn" data-type="latest_tv">Más Recientes</button>
-                </div>
-              </div>
-
-              <div class="category-section">
-                <h3 class="category-title">📡 Géneros - Series</h3>
-                <div class="filters">
-                  <button class="filter-btn" data-type="tv_drama">Drama</button>
-                  <button class="filter-btn" data-type="tv_comedy">Comedia</button>
-                  <button class="filter-btn" data-type="tv_action">Acción</button>
-                  <button class="filter-btn" data-type="tv_scifi">Ciencia Ficción</button>
-                  <button class="filter-btn" data-type="tv_fantasy">Fantasía</button>
-                  <button class="filter-btn" data-type="tv_crime">Crimen</button>
-                  <button class="filter-btn" data-type="tv_mystery">Misterio</button>
-                  <button class="filter-btn" data-type="tv_animation">Animación</button>
-                  <button class="filter-btn" data-type="tv_reality">Reality</button>
-                </div>
-              </div>
-
-              <div class="category-section">
-                <h3 class="category-title">💎 Contenido Exclusivo</h3>
-                <div class="filters">
-                  <button class="filter-btn" data-type="tvmaze_shows">TVmaze Series</button>
-                  <button class="filter-btn" data-type="tvmaze_schedule">Programación TV</button>
-                  <button class="filter-btn" data-type="netflix_originals">Netflix Originals</button>
-                  <button class="filter-btn" data-type="disney_originals">Disney+</button>
-                  <button class="filter-btn" data-type="hbo_originals">HBO Max</button>
-                  <button class="filter-btn" data-type="prime_originals">Prime Video</button>
-                </div>
-              </div>
-
-              <div class="category-section">
-                <h3 class="category-title">🚀 Novedades y Tendencias</h3>
-                <div class="filters">
-                  <button class="filter-btn" data-type="trending_all">Tendencia Total</button>
-                  <button class="filter-btn" data-type="upcoming_movies">Películas Próximas</button>
-                  <button class="filter-btn" data-type="upcoming_tv">Series Próximas</button>
-                  <button class="filter-btn" data-type="weekly_trending">Tendencia Semanal</button>
-                  <button class="filter-btn" data-type="daily_trending">Tendencia Diaria</button>
-                </div>
-              </div>
-
-              <div class="category-section">
-                <h3 class="category-title">🏛️ Clásicos y Cultos</h3>
-                <div class="filters">
-                  <button class="filter-btn" data-type="classic_movies">Clásicos</button>
-                  <button class="filter-btn" data-type="cult_movies">Culto</button>
-                  <button class="filter-btn" data-type="award_winners">Ganadores Premios</button>
-                  <button class="filter-btn" data-type="indie_movies">Independientes</button>
-                  <button class="filter-btn" data-type="foreign_movies">Cine Extranjero</button>
-                </div>
-              </div>
+            <div class="modal-body">
+                <h2 class="modal-title" id="modal-title"></h2>
+                <div class="modal-meta" id="modal-meta"></div>
+                <p class="modal-overview" id="modal-overview"></p>
             </div>
-          </div>
-
-          <button id="load-btn" class="action-btn">
-            <span class="btn-icon">🎬</span>
-            <span class="btn-text">Cargar Contenido</span>
-          </button>
-
-          <div id="loading" class="loading hidden">
-            <div class="loading-spinner"></div>
-            <span class="loading-message">Cargando contenido...</span>
-          </div>
-
-          <div id="movie-container" class="movie-card">
-            <div class="welcome-message">
-              <div class="welcome-icon">🎭</div>
-              <h3>Bienvenido a CTVP</h3>
-              <p>Selecciona una categoría y haz clic en "Cargar Contenido" para descubrir</p>
-            </div>
-          </div>
-
-          <div class="content-actions">
-            <button id="favorite-btn" class="content-action-btn favorite-btn">❤️ Favorito</button>
-            <button id="watchlist-btn" class="content-action-btn watchlist-btn">📝 Por Ver</button>
-          </div>
-        </section>
-
-        <section id="favorites" class="content-section" aria-labelledby="favorites-title">
-          <div class="section-header">
-            <h2 id="favorites-title">Mis Favoritos</h2>
-            <p>Tu colección personal de contenido destacado</p>
-          </div>
-          <div id="favorites-grid" class="content-grid"></div>
-        </section>
-
-        <section id="watchlist" class="content-section" aria-labelledby="watchlist-title">
-          <div class="section-header">
-            <h2 id="watchlist-title">Mi Lista por Ver</h2>
-            <p>Contenido guardado para ver más tarde</p>
-          </div>
-          <div id="watchlist-grid" class="content-grid"></div>
-        </section>
-
-        <section id="history" class="content-section" aria-labelledby="history-title">
-          <div class="section-header">
-            <h2 id="history-title">Historial</h2>
-            <p>Tu actividad reciente</p>
-          </div>
-          <div id="history-list" class="history-list"></div>
-        </section>
-
-        <section id="settings" class="content-section" aria-labelledby="settings-title">
-          <div class="section-header">
-            <h2 id="settings-title">Configuración</h2>
-            <p>Personaliza tu experiencia</p>
-          </div>
-          <div class="settings-grid">
-            <div class="setting-card">
-              <h3>🎨 Tema</h3>
-              <div class="setting-options">
-                <label class="setting-option">
-                  <input type="radio" name="theme" value="azul" checked>
-                  <span class="option-label">Azul Profesional</span>
-                </label>
-                <label class="setting-option">
-                  <input type="radio" name="theme" value="dorado">
-                  <span class="option-label">Dorado Premium</span>
-                </label>
-              </div>
-            </div>
-            
-            <div class="setting-card">
-              <h3>⚡ Calidad</h3>
-              <div class="setting-options">
-                <label class="setting-option">
-                  <select id="content-quality">
-                    <option value="high">Alta calidad</option>
-                    <option value="balanced" selected>Equilibrado</option>
-                    <option value="data">Modo ahorro</option>
-                  </select>
-                </label>
-              </div>
-            </div>
-
-            <div class="setting-card">
-              <h3>🌐 Traducción</h3>
-              <div class="setting-options">
-                <label class="setting-option toggle-option">
-                  <input type="checkbox" id="translation-toggle">
-                  <span class="toggle-slider"></span>
-                  <span class="option-label">Traducir contenido</span>
-                </label>
-                <label class="setting-option">
-                  <select id="translation-language">
-                    <option value="en">Inglés</option>
-                    <option value="fr">Francés</option>
-                    <option value="de">Alemán</option>
-                    <option value="it">Italiano</option>
-                    <option value="pt">Portugués</option>
-                  </select>
-                </label>
-              </div>
-            </div>
-
-            <div class="setting-card">
-              <h3>📺 Fuentes</h3>
-              <div class="setting-options">
-                <label class="setting-option toggle-option">
-                  <input type="checkbox" id="tvmaze-toggle" checked>
-                  <span class="toggle-slider"></span>
-                  <span class="option-label">Mas contenido</span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
+        </div>
     </div>
-  </div>
 
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
