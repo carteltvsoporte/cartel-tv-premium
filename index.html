@@ -3,12 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CTVP - Plataforma</title>
-    <meta name="description" content="CTVP - Tu plataforma de entretenimiento">
+    <title>CTVP - Plataforma Multimedia</title>
+    <meta name="description" content="CTVP - Tu plataforma de entretenimiento con películas, series y anime">
     <link rel="icon" type="image/jpeg" href="https://github.com/carteltvsoporte/ctvp/raw/refs/heads/main/CTVP.jpeg">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="mode-selector-container">
+        <div class="mode-selector-content">
+            <div class="mode-selector-header">
+                <h2>MODO</h2>
+                <p>Elige entre contenido especializado</p>
+            </div>
+            <div class="mode-selector-options">
+                <div class="mode-option active" data-mode="movies">
+                    <div class="mode-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                            <use href="#movie-icon"></use>
+                        </svg>
+                    </div>
+                    <div class="mode-info">
+                        <h3>Películas & Series</h3>
+                        <p>Contenido tradicional de cine y televisión</p>
+                    </div>
+                    <div class="mode-badge">Popular</div>
+                </div>
+                <div class="mode-option" data-mode="anime">
+                    <div class="mode-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                            <use href="#anime-icon"></use>
+                        </svg>
+                    </div>
+                    <div class="mode-info">
+                        <h3>Anime</h3>
+                        <p>Series y películas de animación japonesa</p>
+                    </div>
+                    <div class="mode-badge">Especializado</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <header>
         <div class="header-container">
             <div class="logo">
@@ -16,17 +51,117 @@
                 <h1>CTVP</h1>
             </div>
             
-            <div class="search-container">
-                <input type="text" id="search-input" placeholder="Buscar..." aria-label="Buscar contenido">
-                <button id="search-button" aria-label="Buscar">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                        <use href="#search-icon"></use>
-                    </svg>
-                </button>
-            </div>
+            <nav class="main-nav">
+                <div class="nav-categories">
+                    <div class="nav-category" data-category="movies">
+                        <button class="nav-category-btn">
+                            <span>Películas</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </button>
+                        <div class="nav-submenu">
+                            <a href="#" class="nav-subitem" data-category="popular" data-type="movie">Populares</a>
+                            <a href="#" class="nav-subitem" data-category="now_playing" data-type="movie">En Cines</a>
+                            <a href="#" class="nav-subitem" data-category="top_rated" data-type="movie">Mejor Valoradas</a>
+                            <a href="#" class="nav-subitem" data-category="upcoming" data-type="movie">Próximamente</a>
+                            <a href="#" class="nav-subitem" data-category="trending" data-type="movie">Tendencias</a>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-category" data-category="tv">
+                        <button class="nav-category-btn">
+                            <span>Series TV</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </button>
+                        <div class="nav-submenu">
+                            <a href="#" class="nav-subitem" data-category="popular" data-type="tv">Populares</a>
+                            <a href="#" class="nav-subitem" data-category="top_rated" data-type="tv">Mejor Valoradas</a>
+                            <a href="#" class="nav-subitem" data-category="on_the_air" data-type="tv">En Emisión</a>
+                            <a href="#" class="nav-subitem" data-category="airing_today" data-type="tv">Estrenos Hoy</a>
+                            <a href="#" class="nav-subitem" data-category="trending" data-type="tv">Tendencias</a>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-category" data-category="anime">
+                        <button class="nav-category-btn">
+                            <span>Anime</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </button>
+                        <div class="nav-submenu">
+                            <a href="#" class="nav-subitem" data-category="airing" data-type="anime">En Emisión</a>
+                            <a href="#" class="nav-subitem" data-category="upcoming" data-type="anime">Próximamente</a>
+                            <a href="#" class="nav-subitem" data-type="anime" data-category="bypopularity">Más Populares</a>
+                            <a href="#" class="nav-subitem" data-type="anime" data-category="favorite">Favoritos</a>
+                            <a href="#" class="nav-subitem" data-type="anime" data-category="movie">Películas</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
 
-            <div class="user-info" id="user-info">
-                <button class="btn-logout" id="logout-btn">Cerrar Sesión</button>
+            <div class="header-actions">
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Buscar películas, series, anime..." aria-label="Buscar contenido">
+                    <button id="search-button" aria-label="Buscar">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <use href="#search-icon"></use>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="user-info" id="user-info">
+                    <button class="user-menu-btn" id="user-menu-btn">
+                        <span id="user-name">Usuario</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                    <div class="user-dropdown" id="user-dropdown">
+                        <div class="user-profile">
+                            <div class="user-avatar">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <use href="#user-icon"></use>
+                                </svg>
+                            </div>
+                            <div class="user-details">
+                                <span class="user-display-name" id="user-display-name">Usuario</span>
+                                <span class="user-plan">Plan Premium</span>
+                            </div>
+                        </div>
+                        <div class="user-menu-items">
+                            <a href="#" class="user-menu-item" id="favorites-link">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                    <use href="#heart-icon"></use>
+                                </svg>
+                                Favoritos
+                            </a>
+                            <a href="#" class="user-menu-item" id="history-link">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                    <use href="#history-icon"></use>
+                                </svg>
+                                Historial
+                            </a>
+                            <a href="#" class="user-menu-item" id="settings-link">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                    <use href="#settings-icon"></use>
+                                </svg>
+                                Configuración
+                            </a>
+                        </div>
+                        <div class="user-menu-footer">
+                            <button class="btn-logout" id="logout-btn">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                    <use href="#logout-icon"></use>
+                                </svg>
+                                Cerrar Sesión
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <button class="nav-toggle" id="nav-toggle" aria-label="Menú">
@@ -37,21 +172,31 @@
         </div>
     </header>
     
-    <nav>
-        <div class="nav-container" id="nav-container">
-            <div class="nav-item active" data-category="popular" data-type="movie">Populares</div>
-            <div class="nav-item" data-category="now_playing" data-type="movie">En Cines</div>
-            <div class="nav-item" data-category="top_rated" data-type="movie">Mejor Valoradas</div>
-            <div class="nav-item" data-category="upcoming" data-type="movie">Próximamente</div>
-            <div class="nav-item" data-category="popular" data-type="tv">Series TV</div>
-            <div class="nav-item" data-category="top_rated" data-type="tv">Series Mejor Valoradas</div>
-        </div>
-    </nav>
-    
     <main id="main-content">
         <section id="content-section">
-            <div class="section-title">
-                <h2 id="section-title">Contenido Destacado</h2>
+            <div class="section-header">
+                <div class="section-title">
+                    <h2 id="section-title">Contenido Destacado</h2>
+                    <div class="section-subtitle" id="section-subtitle">Las mejores películas y series para ti</div>
+                </div>
+                <div class="section-actions">
+                    <button class="btn-view-mode active" data-view="grid" aria-label="Vista de cuadrícula">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <use href="#grid-icon"></use>
+                        </svg>
+                    </button>
+                    <button class="btn-view-mode" data-view="list" aria-label="Vista de lista">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <use href="#list-icon"></use>
+                        </svg>
+                    </button>
+                    <button class="btn-filter" id="filter-btn" aria-label="Filtrar contenido">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <use href="#filter-icon"></use>
+                        </svg>
+                        Filtrar
+                    </button>
+                </div>
             </div>
             <div class="content-grid" id="content-grid">
                 <div class="loading">
@@ -74,6 +219,45 @@
         <symbol id="star-icon" viewBox="0 0 24 24">
             <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
         </symbol>
+        <symbol id="anime-icon" viewBox="0 0 24 24">
+            <path d="M12 2L14.5 8.5L21 9L16 13.5L17.5 20L12 16.5L6.5 20L8 13.5L3 9L9.5 8.5L12 2Z" fill="currentColor"/>
+        </symbol>
+        <symbol id="movie-icon" viewBox="0 0 24 24">
+            <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" fill="none"/>
+            <path d="M10 8L16 12L10 16V8Z" fill="currentColor"/>
+        </symbol>
+        <symbol id="user-icon" viewBox="0 0 24 24">
+            <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="currentColor" stroke-width="2"/>
+        </symbol>
+        <symbol id="heart-icon" viewBox="0 0 24 24">
+            <path d="M20.84 4.61C20.3292 4.099 19.7228 3.69364 19.0554 3.41708C18.3879 3.14052 17.6725 2.99817 16.95 2.99817C16.2275 2.99817 15.5121 3.14052 14.8446 3.41708C14.1772 3.69364 13.5708 4.099 13.06 4.61L12 5.67L10.94 4.61C9.9083 3.5783 8.50903 2.9987 7.05 2.9987C5.59096 2.9987 4.19169 3.5783 3.16 4.61C2.1283 5.6417 1.5487 7.04097 1.5487 8.5C1.5487 9.95903 2.1283 11.3583 3.16 12.39L12 21.23L20.84 12.39C21.351 11.8792 21.7563 11.2728 22.0329 10.6053C22.3095 9.93789 22.4518 9.22248 22.4518 8.5C22.4518 7.77752 22.3095 7.06211 22.0329 6.39465C21.7563 5.72719 21.351 5.12076 20.84 4.61Z" fill="currentColor"/>
+        </symbol>
+        <symbol id="history-icon" viewBox="0 0 24 24">
+            <path d="M12 8V12L15 15M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2"/>
+        </symbol>
+        <symbol id="settings-icon" viewBox="0 0 24 24">
+            <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M19.4 15C19.2669 15.3044 19.1995 15.6338 19.2 16C19.2 16.3662 19.2675 16.6956 19.4 17L21.4 20C21.5556 20.2556 21.5778 20.5667 21.4 21C21.2444 21.2556 20.9778 21.4 20.7 21H15.6C15.2444 21.3556 14.9333 21.4667 14.5 21.5C14.1111 21.4667 13.7556 21.3556 13.4 21H8.3C8.02222 21 7.75556 20.8556 7.6 20.6C7.42222 20.3222 7.44444 20.0111 7.6 19.8L9.6 16.8C9.73254 16.5044 9.80001 16.175 9.80001 15.8088C9.80001 15.4427 9.73254 15.1133 9.6 14.8088L7.6 11.8088C7.44444 11.5333 7.42222 11.2222 7.6 10.9C7.75556 10.6444 8.02222 10.5 8.3 10.5H13.4C13.7556 10.1444 14.0667 10.0333 14.5 10C14.8889 10.0333 15.2444 10.1444 15.6 10.5H20.7C20.9778 10.5 21.2444 10.6444 21.4 10.9C21.5778 11.1778 21.5556 11.4889 21.4 11.7L19.4 15Z" stroke="currentColor" stroke-width="2"/>
+        </symbol>
+        <symbol id="logout-icon" viewBox="0 0 24 24">
+            <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9M16 17L21 12M21 12L16 7M21 12H9" stroke="currentColor" stroke-width="2"/>
+        </symbol>
+        <symbol id="grid-icon" viewBox="0 0 24 24">
+            <path d="M3 3H10V10H3V3Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M14 3H21V10H14V3Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M14 14H21V21H14V14Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M3 14H10V21H3V14Z" stroke="currentColor" stroke-width="2"/>
+        </symbol>
+        <symbol id="list-icon" viewBox="0 0 24 24">
+            <path d="M8 6H21M8 12H21M8 18H21M3 6H3.01M3 12H3.01M3 18H3.01" stroke="currentColor" stroke-width="2"/>
+        </symbol>
+        <symbol id="filter-icon" viewBox="0 0 24 24">
+            <path d="M22 3H2L10 12.46V19L14 21V12.46L22 3Z" stroke="currentColor" stroke-width="2"/>
+        </symbol>
+        <symbol id="bookmark-icon" viewBox="0 0 24 24">
+            <path d="M19 21L12 16L5 21V5C5 4.46957 5.21071 3.96086 5.58579 3.58579C5.96086 3.21071 6.46957 3 7 3H17C17.5304 3 18.0391 3.21071 18.4142 3.58579C18.7893 3.96086 19 4.46957 19 5V21Z" fill="currentColor"/>
+        </symbol>
     </svg>
 
     <div class="modal" id="detail-modal" role="dialog" aria-labelledby="modal-title">
@@ -85,14 +269,37 @@
             </button>
             
             <div class="modal-header">
-                <img src="" alt="" class="modal-backdrop" id="modal-backdrop">
-                <img src="" alt="" class="modal-poster" id="modal-poster">
+                <img src="" alt="" class="modal-backdrop" id="modal-backdrop" loading="lazy">
+                <img src="" alt="" class="modal-poster" id="modal-poster" loading="lazy">
+                <div class="modal-header-overlay"></div>
             </div>
             
             <div class="modal-body">
                 <h2 class="modal-title" id="modal-title"></h2>
                 <div class="modal-meta" id="modal-meta"></div>
-                <p class="modal-overview" id="modal-overview"></p>
+                <div class="modal-genres" id="modal-genres"></div>
+                
+                <div class="modal-section">
+                    <h3>Sinopsis</h3>
+                    <p class="modal-overview" id="modal-overview"></p>
+                </div>
+                
+                <div class="modal-details-grid" id="modal-details"></div>
+                
+                <div class="modal-actions">
+                    <button class="btn-action btn-favorite" id="btn-favorite">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <use href="#heart-icon"></use>
+                        </svg>
+                        Añadir a Favoritos
+                    </button>
+                    <button class="btn-action btn-watchlist" id="btn-watchlist">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <use href="#bookmark-icon"></use>
+                        </svg>
+                        Ver Más Tarde
+                    </button>
+                </div>
             </div>
         </div>
     </div>

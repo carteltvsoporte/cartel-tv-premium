@@ -87,17 +87,36 @@
 
     <script>
         const authorizedUsers = [
-            { name: "Marcos", phone: "50369270" },
-            { name: "Carlos López", phone: "600234567" },
-            { name: "María Rodríguez", phone: "600345678" },
-            { name: "Javier Martínez", phone: "600456789" },
-            { name: "Laura Sánchez", phone: "600567890" },
-            { name: "David Fernández", phone: "600678901" },
-            { name: "Elena Pérez", phone: "600789012" },
-            { name: "Miguel González", phone: "600890123" },
-            { name: "Sofía Díaz", phone: "600901234" },
-            { name: "Pablo Ruiz", phone: "600012345" }
+            { name: "Marcos", phone: "50369270", aliases: ["Marcos", "Marco"] },
+            { name: "Carlos López", phone: "600234567", aliases: ["Carlos", "Carlos Lopez"] },
+            { name: "María Rodríguez", phone: "600345678", aliases: ["Maria", "María Rodriguez"] },
+            { name: "Javier Martínez", phone: "600456789", aliases: ["Javier", "Javier Martinez"] },
+            { name: "Laura Sánchez", phone: "600567890", aliases: ["Laura", "Laura Sanchez"] },
+            { name: "David Fernández", phone: "600678901", aliases: ["David", "David Fernandez"] },
+            { name: "Elena Pérez", phone: "600789012", aliases: ["Elena", "Elena Perez"] },
+            { name: "Miguel González", phone: "600890123", aliases: ["Miguel", "Miguel Gonzalez"] },
+            { name: "Sofía Díaz", phone: "600901234", aliases: ["Sofia", "Sofía Diaz"] },
+            { name: "Pablo Ruiz", phone: "600012345", aliases: ["Pablo", "Pablo Ruiz"] }
         ];
+
+        function findUserMatch(name, phone) {
+            const cleanName = name.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            const cleanPhone = phone.replace(/\s+/g, '').replace(/[^\d]/g, '');
+            
+            return authorizedUsers.find(user => {
+                const userCleanPhone = user.phone.replace(/\s+/g, '').replace(/[^\d]/g, '');
+                if (userCleanPhone !== cleanPhone) return false;
+                
+                const nameVariations = [
+                    user.name.toLowerCase(),
+                    ...(user.aliases || []).map(a => a.toLowerCase())
+                ].map(n => n.normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
+                
+                return nameVariations.some(variation => 
+                    cleanName.includes(variation) || variation.includes(cleanName)
+                );
+            });
+        }
 
         document.addEventListener('DOMContentLoaded', function() {
             checkExistingAuth();
@@ -128,16 +147,14 @@
                     return;
                 }
                 
-                const userExists = authorizedUsers.some(user => 
-                    user.name.toLowerCase() === name.toLowerCase() && user.phone === phone
-                );
+                const userMatch = findUserMatch(name, phone);
                 
-                if (userExists) {
+                if (userMatch) {
                     showMessage(messageEl, 'Acceso concedido. Redirigiendo...', 'success');
                     
                     const userSession = {
-                        name: name,
-                        phone: phone,
+                        name: userMatch.name,
+                        phone: userMatch.phone,
                         loginTime: new Date().toISOString()
                     };
                     localStorage.setItem('ctvp_user_session', JSON.stringify(userSession));
@@ -161,11 +178,9 @@
                     return;
                 }
                 
-                const userExists = authorizedUsers.some(user => 
-                    user.name.toLowerCase() === name.toLowerCase() && user.phone === phone
-                );
+                const userMatch = findUserMatch(name, phone);
                 
-                if (userExists) {
+                if (userMatch) {
                     showMessage(messageEl, 'Ya estás autorizado. Inicia sesión.', 'info');
                     document.querySelector('[data-tab="login"]').click();
                     document.getElementById('login-name').value = name;

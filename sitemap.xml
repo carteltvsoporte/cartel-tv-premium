@@ -3,7 +3,6 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
         xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
     
-    <!-- URL principal -->
     <url>
         <loc>https://carteltvsoporte.github.io/ctvp/</loc>
         <lastmod>2023-12-01</lastmod>
@@ -16,7 +15,6 @@
         </image:image>
     </url>
     
-    <!-- Categorías de películas -->
     <url>
         <loc>https://carteltvsoporte.github.io/ctvp/#popular</loc>
         <lastmod>2023-12-01</lastmod>
@@ -45,7 +43,6 @@
         <priority>0.8</priority>
     </url>
     
-    <!-- Categorías de series -->
     <url>
         <loc>https://carteltvsoporte.github.io/ctvp/#tv-popular</loc>
         <lastmod>2023-12-01</lastmod>
@@ -60,7 +57,6 @@
         <priority>0.8</priority>
     </url>
     
-    <!-- Páginas de autenticación -->
     <url>
         <loc>https://carteltvsoporte.github.io/ctvp/#login</loc>
         <lastmod>2023-12-01</lastmod>
