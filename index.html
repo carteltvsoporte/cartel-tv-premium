@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CartelTV</title>
+<meta name="description" content="CartelTV - Plataforma de streaming premium con películas, series y anime">
+<meta name="theme-color" content="#3498db">
+<link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -29,7 +32,7 @@
 <i class="fas fa-plus-circle"></i>Tener Ticket
 </button>
 <div class="ticket-info">
-<p><i class="fas fa-info-circle"></i> Tu ticket será enviado para aprobación</p>
+<p><i class="fas fa-info-circle"></i>Envia tu ticket para aprovacion</p>
 </div>
 </div>
 <div class="login-notification" id="loginNotification"></div>
@@ -305,6 +308,12 @@
 <option value="720">720p</option>
 <option value="480">480p</option>
 </select>
+<select id="configFontSize" class="config-select">
+<option value="small">Pequeño</option>
+<option value="medium" selected>Mediano</option>
+<option value="large">Grande</option>
+<option value="xlarge">Extra Grande</option>
+</select>
 </div>
 </div>
 <div class="config-card">
@@ -325,6 +334,36 @@
 <span class="switch-slider"></span>
 <span class="switch-label">Noticias</span>
 </label>
+<label class="config-switch">
+<input type="checkbox" id="configSound" checked>
+<span class="switch-slider"></span>
+<span class="switch-label">Sonido</span>
+</label>
+</div>
+</div>
+<div class="config-card">
+<h3><i class="fas fa-universal-access"></i> Accesibilidad</h3>
+<div class="config-options">
+<label class="config-switch">
+<input type="checkbox" id="configReduceMotion">
+<span class="switch-slider"></span>
+<span class="switch-label">Reducir Movimiento</span>
+</label>
+<label class="config-switch">
+<input type="checkbox" id="configHighContrast">
+<span class="switch-slider"></span>
+<span class="switch-label">Alto Contraste</span>
+</label>
+<label class="config-switch">
+<input type="checkbox" id="configAutoplay" checked>
+<span class="switch-slider"></span>
+<span class="switch-label">Autoplay</span>
+</label>
+<label class="config-switch">
+<input type="checkbox" id="configSubtitles" checked>
+<span class="switch-slider"></span>
+<span class="switch-label">Subtítulos</span>
+</label>
 </div>
 </div>
 </div>
@@ -339,6 +378,7 @@
 </div>
 </div>
 <div class="notification" id="globalNotification"></div>
+<script>if('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js')</script>
 <script src="api-tv.js"></script>
 <script src="api-anime.js"></script>
 <script src="config.js"></script>
@@ -347,5 +387,6 @@
 <script src="login.js"></script>
 <script src="perfil.js"></script>
 <script src="script.js"></script>
+<script src="proxy-server.js"></script>
 </body>
 </html>
