@@ -1,649 +1,351 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CARTEL TV PREMIUM</title>
-    <meta name="description" content="Streaming de películas, series y anime en alta calidad. Tu entretenimiento ilimitado.">
-    <link rel="icon" type="image/jpeg" href="https://github.com/carteltvsoporte/ctvp/raw/refs/heads/main/CTVP.jpeg">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CartelTV</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="animations-enabled">
-    <!-- Modal de Selección de Modo -->
-    <div class="mode-selector" id="modeSelector">
-        <div class="mode-selector-container">
-            <div class="mode-header">
-                <div class="logo">
-                    <div class="logo-icon">CTVP</div>
-                    <h1>Plataforma Multimedia</h1>
-                </div>
-                <p class="mode-subtitle">Selecciona tu experiencia preferida</p>
-            </div>
-            
-            <div class="mode-options">
-                <div class="mode-card active" data-mode="movies">
-                    <div class="mode-card-header">
-                        <div class="mode-icon">
-                            <i class="fas fa-film"></i>
-                        </div>
-                        <div class="mode-badge">Popular</div>
-                    </div>
-                    <div class="mode-card-body">
-                        <h3>Películas & Series</h3>
-                        <p>Contenido cinematográfico y series de televisión de todo el mundo</p>
-                        <ul class="mode-features">
-                            <li><i class="fas fa-check"></i> Últimos estrenos</li>
-                            <li><i class="fas fa-check"></i> Clásicos del cine</li>
-                            <li><i class="fas fa-check"></i> Series exclusivas</li>
-                        </ul>
-                    </div>
-                    <div class="mode-card-footer">
-                        <button class="btn-mode-select" data-mode="movies">
-                            <i class="fas fa-play-circle"></i> Seleccionar
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="mode-card" data-mode="anime">
-                    <div class="mode-card-header">
-                        <div class="mode-icon">
-                            <i class="fas fa-ghost"></i>
-                        </div>
-                        <div class="mode-badge">Especializado</div>
-                    </div>
-                    <div class="mode-card-body">
-                        <h3>Anime</h3>
-                        <p>Animación japonesa: series, películas y OVAs</p>
-                        <ul class="mode-features">
-                            <li><i class="fas fa-check"></i> Anime en emisión</li>
-                            <li><i class="fas fa-check"></i> Clásicos del anime</li>
-                            <li><i class="fas fa-check"></i> Películas exclusivas</li>
-                        </ul>
-                    </div>
-                    <div class="mode-card-footer">
-                        <button class="btn-mode-select" data-mode="anime">
-                            <i class="fas fa-play-circle"></i> Seleccionar
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mode-footer">
-                <p class="mode-hint">
-                    <i class="fas fa-info-circle"></i>
-                    Puedes cambiar el modo en cualquier momento desde el menú de configuración
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Header Principal -->
-    <header class="main-header">
-        <div class="header-container">
-            <!-- Logo y Navegación Principal -->
-            <div class="header-left">
-                <div class="logo-container">
-                    <div class="logo-icon">CTVP</div>
-                    <div class="logo-text">
-                        <span class="logo-title">CineTV</span>
-                        <span class="logo-subtitle">Premium</span>
-                    </div>
-                </div>
-                
-                <nav class="main-navigation">
-                    <div class="nav-group">
-                        <button class="nav-btn active" data-section="home">
-                            <i class="fas fa-home"></i>
-                            <span>Inicio</span>
-                        </button>
-                        
-                        <div class="nav-dropdown">
-                            <button class="nav-btn" data-type="dropdown" data-target="movies">
-                                <i class="fas fa-film"></i>
-                                <span>Películas</span>
-                                <i class="fas fa-chevron-down"></i>
-                            </button>
-                            <div class="dropdown-menu" id="movies-dropdown">
-                                <a href="#" class="dropdown-item" data-category="popular" data-type="movie">
-                                    <i class="fas fa-fire"></i> Populares
-                                </a>
-                                <a href="#" class="dropdown-item" data-category="now_playing" data-type="movie">
-                                    <i class="fas fa-ticket-alt"></i> En Cines
-                                </a>
-                                <a href="#" class="dropdown-item" data-category="top_rated" data-type="movie">
-                                    <i class="fas fa-star"></i> Mejor Valoradas
-                                </a>
-                                <a href="#" class="dropdown-item" data-category="upcoming" data-type="movie">
-                                    <i class="fas fa-calendar-alt"></i> Próximamente
-                                </a>
-                            </div>
-                        </div>
-                        
-                        <div class="nav-dropdown">
-                            <button class="nav-btn" data-type="dropdown" data-target="series">
-                                <i class="fas fa-tv"></i>
-                                <span>Series</span>
-                                <i class="fas fa-chevron-down"></i>
-                            </button>
-                            <div class="dropdown-menu" id="series-dropdown">
-                                <a href="#" class="dropdown-item" data-category="popular" data-type="tv">
-                                    <i class="fas fa-fire"></i> Populares
-                                </a>
-                                <a href="#" class="dropdown-item" data-category="top_rated" data-type="tv">
-                                    <i class="fas fa-star"></i> Mejor Valoradas
-                                </a>
-                                <a href="#" class="dropdown-item" data-category="on_the_air" data-type="tv">
-                                    <i class="fas fa-satellite-dish"></i> En Emisión
-                                </a>
-                                <a href="#" class="dropdown-item" data-category="airing_today" data-type="tv">
-                                    <i class="fas fa-calendar-day"></i> Estrenos Hoy
-                                </a>
-                            </div>
-                        </div>
-                        
-                        <div class="nav-dropdown anime-only">
-                            <button class="nav-btn" data-type="dropdown" data-target="anime">
-                                <i class="fas fa-ghost"></i>
-                                <span>Anime</span>
-                                <i class="fas fa-chevron-down"></i>
-                            </button>
-                            <div class="dropdown-menu" id="anime-dropdown">
-                                <a href="#" class="dropdown-item" data-category="airing" data-type="anime">
-                                    <i class="fas fa-satellite-dish"></i> En Emisión
-                                </a>
-                                <a href="#" class="dropdown-item" data-category="upcoming" data-type="anime">
-                                    <i class="fas fa-calendar-alt"></i> Próximamente
-                                </a>
-                                <a href="#" class="dropdown-item" data-category="bypopularity" data-type="anime">
-                                    <i class="fas fa-chart-line"></i> Más Populares
-                                </a>
-                                <a href="#" class="dropdown-item" data-category="favorite" data-type="anime">
-                                    <i class="fas fa-heart"></i> Favoritos
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-            </div>
-            
-            <!-- Búsqueda y Acciones de Usuario -->
-            <div class="header-right">
-                <div class="search-container">
-                    <div class="search-input-wrapper">
-                        <i class="fas fa-search search-icon"></i>
-                        <input type="text" 
-                               class="search-input" 
-                               id="searchInput"
-                               placeholder="Buscar películas, series, anime...">
-                        <button class="search-clear" id="searchClear">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div class="search-results" id="searchResults"></div>
-                </div>
-                
-                <div class="header-actions">
-                    <button class="action-btn" id="themeToggle" title="Cambiar tema">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                    
-                    <button class="action-btn" id="notificationsBtn" title="Notificaciones">
-                        <i class="fas fa-bell"></i>
-                        <span class="notification-badge">3</span>
-                    </button>
-                    
-                    <div class="user-profile">
-                        <button class="user-avatar" id="userMenuBtn">
-                            <div class="avatar-img">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <span class="user-name" id="userName">Usuario</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        
-                        <div class="user-menu" id="userMenu">
-                            <div class="user-info-card">
-                                <div class="user-avatar-large">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                                <div class="user-details">
-                                    <h4 id="userDisplayName">Usuario</h4>
-                                    <p class="user-plan">
-                                        <i class="fas fa-crown"></i> Plan Premium
-                                    </p>
-                                </div>
-                            </div>
-                            
-                            <div class="user-menu-sections">
-                                <div class="menu-section">
-                                    <h5>Mi Cuenta</h5>
-                                    <a href="#" class="menu-item" id="profileLink">
-                                        <i class="fas fa-user-edit"></i> Mi Perfil
-                                    </a>
-                                    <a href="#" class="menu-item" id="favoritesLink">
-                                        <i class="fas fa-heart"></i> Favoritos
-                                    </a>
-                                    <a href="#" class="menu-item" id="watchlistLink">
-                                        <i class="fas fa-bookmark"></i> Ver Más Tarde
-                                    </a>
-                                    <a href="#" class="menu-item" id="historyLink">
-                                        <i class="fas fa-history"></i> Historial
-                                    </a>
-                                </div>
-                                
-                                <div class="menu-section">
-                                    <h5>Configuración</h5>
-                                    <a href="#" class="menu-item" id="settingsLink">
-                                        <i class="fas fa-cog"></i> Configuración
-                                    </a>
-                                    <a href="#" class="menu-item" id="appearanceLink">
-                                        <i class="fas fa-palette"></i> Apariencia
-                                    </a>
-                                    <a href="#" class="menu-item" id="playbackLink">
-                                        <i class="fas fa-play-circle"></i> Reproducción
-                                    </a>
-                                    <a href="#" class="menu-item" id="parentalLink">
-                                        <i class="fas fa-user-shield"></i> Control Parental
-                                    </a>
-                                </div>
-                                
-                                <div class="menu-section">
-                                    <h5>Sistema</h5>
-                                    <a href="#" class="menu-item" id="helpLink">
-                                        <i class="fas fa-question-circle"></i> Ayuda
-                                    </a>
-                                    <a href="#" class="menu-item" id="feedbackLink">
-                                        <i class="fas fa-comment-alt"></i> Enviar Feedback
-                                    </a>
-                                    <a href="#" class="menu-item" id="aboutLink">
-                                        <i class="fas fa-info-circle"></i> Acerca de
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <div class="user-menu-footer">
-                                <button class="btn-logout" id="logoutBtn">
-                                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Menú Móvil -->
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-    </header>
-
-    <!-- Menú Móvil -->
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-menu-header">
-            <div class="user-info-mobile">
-                <div class="avatar-img">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div>
-                    <h4 id="mobileUserName">Usuario</h4>
-                    <p class="user-plan">Plan Premium</p>
-                </div>
-            </div>
-            <button class="mobile-menu-close" id="mobileMenuClose">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        
-        <div class="mobile-menu-content">
-            <a href="#" class="mobile-menu-item" data-section="home">
-                <i class="fas fa-home"></i> Inicio
-            </a>
-            
-            <div class="mobile-menu-section">
-                <h6>Películas</h6>
-                <a href="#" class="mobile-menu-subitem" data-category="popular" data-type="movie">
-                    <i class="fas fa-fire"></i> Populares
-                </a>
-                <a href="#" class="mobile-menu-subitem" data-category="now_playing" data-type="movie">
-                    <i class="fas fa-ticket-alt"></i> En Cines
-                </a>
-                <a href="#" class="mobile-menu-subitem" data-category="top_rated" data-type="movie">
-                    <i class="fas fa-star"></i> Mejor Valoradas
-                </a>
-                <a href="#" class="mobile-menu-subitem" data-category="upcoming" data-type="movie">
-                    <i class="fas fa-calendar-alt"></i> Próximamente
-                </a>
-            </div>
-            
-            <div class="mobile-menu-section">
-                <h6>Series</h6>
-                <a href="#" class="mobile-menu-subitem" data-category="popular" data-type="tv">
-                    <i class="fas fa-fire"></i> Populares
-                </a>
-                <a href="#" class="mobile-menu-subitem" data-category="top_rated" data-type="tv">
-                    <i class="fas fa-star"></i> Mejor Valoradas
-                </a>
-                <a href="#" class="mobile-menu-subitem" data-category="on_the_air" data-type="tv">
-                    <i class="fas fa-satellite-dish"></i> En Emisión
-                </a>
-                <a href="#" class="mobile-menu-subitem" data-category="airing_today" data-type="tv">
-                    <i class="fas fa-calendar-day"></i> Estrenos Hoy
-                </a>
-            </div>
-            
-            <div class="mobile-menu-section anime-only">
-                <h6>Anime</h6>
-                <a href="#" class="mobile-menu-subitem" data-category="airing" data-type="anime">
-                    <i class="fas fa-satellite-dish"></i> En Emisión
-                </a>
-                <a href="#" class="mobile-menu-subitem" data-category="upcoming" data-type="anime">
-                    <i class="fas fa-calendar-alt"></i> Próximamente
-                </a>
-                <a href="#" class="mobile-menu-subitem" data-category="bypopularity" data-type="anime">
-                    <i class="fas fa-chart-line"></i> Más Populares
-                </a>
-                <a href="#" class="mobile-menu-subitem" data-category="favorite" data-type="anime">
-                    <i class="fas fa-heart"></i> Favoritos
-                </a>
-            </div>
-            
-            <div class="mobile-menu-section">
-                <h6>Mi Cuenta</h6>
-                <a href="#" class="mobile-menu-subitem" id="mobileProfileLink">
-                    <i class="fas fa-user-edit"></i> Mi Perfil
-                </a>
-                <a href="#" class="mobile-menu-subitem" id="mobileFavoritesLink">
-                    <i class="fas fa-heart"></i> Favoritos
-                </a>
-                <a href="#" class="mobile-menu-subitem" id="mobileWatchlistLink">
-                    <i class="fas fa-bookmark"></i> Ver Más Tarde
-                </a>
-                <a href="#" class="mobile-menu-subitem" id="mobileHistoryLink">
-                    <i class="fas fa-history"></i> Historial
-                </a>
-            </div>
-            
-            <div class="mobile-menu-section">
-                <h6>Configuración</h6>
-                <a href="#" class="mobile-menu-subitem" id="mobileSettingsLink">
-                    <i class="fas fa-cog"></i> Configuración
-                </a>
-                <a href="#" class="mobile-menu-subitem" id="mobileAppearanceLink">
-                    <i class="fas fa-palette"></i> Apariencia
-                </a>
-            </div>
-            
-            <div class="mobile-menu-footer">
-                <button class="btn-logout-mobile" id="mobileLogoutBtn">
-                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Contenido Principal -->
-    <main class="main-content">
-        <!-- Hero Section -->
-        <section class="hero-section" id="heroSection">
-            <div class="hero-background">
-                <div class="hero-overlay"></div>
-                <div class="hero-content">
-                    <div class="hero-text">
-                        <h1 class="hero-title" id="heroTitle">Descubre tu próxima historia favorita</h1>
-                        <p class="hero-subtitle" id="heroSubtitle">Miles de películas, series y anime esperando por ti</p>
-                        
-                        <div class="hero-stats">
-                            <div class="stat-item">
-                                <i class="fas fa-film"></i>
-                                <div>
-                                    <span class="stat-number" id="movieCount">10,000+</span>
-                                    <span class="stat-label">Películas</span>
-                                </div>
-                            </div>
-                            <div class="stat-item">
-                                <i class="fas fa-tv"></i>
-                                <div>
-                                    <span class="stat-number" id="seriesCount">5,000+</span>
-                                    <span class="stat-label">Series</span>
-                                </div>
-                            </div>
-                            <div class="stat-item">
-                                <i class="fas fa-ghost"></i>
-                                <div>
-                                    <span class="stat-number" id="animeCount">2,000+</span>
-                                    <span class="stat-label">Anime</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="hero-actions">
-                        <button class="btn-hero-primary" id="exploreBtn">
-                            <i class="fas fa-play"></i> Explorar Todo
-                        </button>
-                        <button class="btn-hero-secondary" id="trendingBtn">
-                            <i class="fas fa-fire"></i> Ver Tendencias
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Filtros y Controles -->
-        <section class="filters-section">
-            <div class="container">
-                <div class="filters-header">
-                    <h2 id="sectionTitle">Contenido Destacado</h2>
-                    <p class="section-subtitle" id="sectionSubtitle">Seleccionado especialmente para ti</p>
-                </div>
-                
-                <div class="filters-controls">
-                    <div class="view-controls">
-                        <button class="view-btn active" data-view="grid" title="Vista de cuadrícula">
-                            <i class="fas fa-th"></i>
-                        </button>
-                        <button class="view-btn" data-view="list" title="Vista de lista">
-                            <i class="fas fa-list"></i>
-                        </button>
-                        <button class="view-btn" data-view="compact" title="Vista compacta">
-                            <i class="fas fa-grip-horizontal"></i>
-                        </button>
-                    </div>
-                    
-                    <div class="filter-options">
-                        <div class="filter-dropdown">
-                            <button class="filter-btn" id="genreFilter">
-                                <i class="fas fa-tags"></i> Género
-                                <i class="fas fa-chevron-down"></i>
-                            </button>
-                            <div class="filter-menu" id="genreMenu"></div>
-                        </div>
-                        
-                        <div class="filter-dropdown">
-                            <button class="filter-btn" id="yearFilter">
-                                <i class="fas fa-calendar-alt"></i> Año
-                                <i class="fas fa-chevron-down"></i>
-                            </button>
-                            <div class="filter-menu" id="yearMenu"></div>
-                        </div>
-                        
-                        <div class="filter-dropdown">
-                            <button class="filter-btn" id="sortFilter">
-                                <i class="fas fa-sort-amount-down"></i> Ordenar
-                                <i class="fas fa-chevron-down"></i>
-                            </button>
-                            <div class="filter-menu" id="sortMenu"></div>
-                        </div>
-                        
-                        <button class="btn-filter-clear" id="clearFilters">
-                            <i class="fas fa-times"></i> Limpiar
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Grid de Contenido -->
-        <section class="content-section">
-            <div class="container">
-                <div class="content-grid" id="contentGrid">
-                    <!-- Contenido cargado dinámicamente -->
-                    <div class="loading-state">
-                        <div class="spinner"></div>
-                        <p>Cargando contenido...</p>
-                    </div>
-                </div>
-                
-                <div class="load-more-container">
-                    <button class="btn-load-more" id="loadMoreBtn">
-                        <i class="fas fa-plus"></i> Cargar Más
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sección de Recomendaciones -->
-        <section class="recommendations-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Recomendaciones Personalizadas</h2>
-                    <p>Basado en tu actividad y preferencias</p>
-                </div>
-                <div class="recommendations-grid" id="recommendationsGrid"></div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <div class="logo-icon">CTVP</div>
-                        <p class="footer-tagline">Tu entretenimiento, ilimitado.</p>
-                    </div>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Contenido</h4>
-                    <a href="#" class="footer-link">Películas</a>
-                    <a href="#" class="footer-link">Series TV</a>
-                    <a href="#" class="footer-link">Anime</a>
-                    <a href="#" class="footer-link">Novedades</a>
-                    <a href="#" class="footer-link">Próximamente</a>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Cuenta</h4>
-                    <a href="#" class="footer-link">Mi Perfil</a>
-                    <a href="#" class="footer-link">Favoritos</a>
-                    <a href="#" class="footer-link">Historial</a>
-                    <a href="#" class="footer-link">Configuración</a>
-                    <a href="#" class="footer-link">Ayuda</a>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Legal</h4>
-                    <a href="#" class="footer-link">Términos de Servicio</a>
-                    <a href="#" class="footer-link">Política de Privacidad</a>
-                    <a href="#" class="footer-link">Cookies</a>
-                    <a href="#" class="footer-link">Aviso Legal</a>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2024 CTVP Plataforma Multimedia. Todos los derechos reservados.</p>
-                <div class="footer-links">
-                    <a href="#" class="footer-bottom-link">Soporte</a>
-                    <a href="#" class="footer-bottom-link">Contacto</a>
-                    <a href="#" class="footer-bottom-link">Desarrolladores</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Modal de Detalles -->
-    <div class="modal-overlay" id="detailModal">
-        <div class="modal-container">
-            <button class="modal-close" id="modalClose">
-                <i class="fas fa-times"></i>
-            </button>
-            
-            <div class="modal-header" id="modalHeader">
-                <div class="modal-backdrop" id="modalBackdrop"></div>
-                <div class="modal-header-content">
-                    <div class="modal-poster-container">
-                        <img src="" alt="" class="modal-poster" id="modalPoster">
-                    </div>
-                    <div class="modal-header-info">
-                        <div class="modal-badge" id="modalBadge">Película</div>
-                        <h2 class="modal-title" id="modalTitle"></h2>
-                        <div class="modal-meta" id="modalMeta"></div>
-                        <div class="modal-genres" id="modalGenres"></div>
-                        <div class="modal-actions">
-                            <button class="btn-modal-primary" id="btnPlay">
-                                <i class="fas fa-play"></i> Reproducir
-                            </button>
-                            <button class="btn-modal-secondary" id="btnFavorite">
-                                <i class="far fa-heart"></i> Favorito
-                            </button>
-                            <button class="btn-modal-secondary" id="btnWatchlist">
-                                <i class="far fa-bookmark"></i> Ver Más Tarde
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="modal-body">
-                <div class="modal-section">
-                    <h3><i class="fas fa-align-left"></i> Sinopsis</h3>
-                    <p class="modal-overview" id="modalOverview"></p>
-                </div>
-                
-                <div class="modal-details-grid" id="modalDetails"></div>
-                
-                <div class="modal-section" id="castSection">
-                    <h3><i class="fas fa-users"></i> Reparto</h3>
-                    <div class="cast-grid" id="castGrid"></div>
-                </div>
-                
-                <div class="modal-section" id="similarSection">
-                    <h3><i class="fas fa-thumbs-up"></i> Contenido Similar</h3>
-                    <div class="similar-grid" id="similarGrid"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de Perfil -->
-    <div class="modal-overlay profile-modal" id="profileModal">
-        <div class="modal-container profile-container">
-            <!-- Contenido del perfil se cargará dinámicamente -->
-        </div>
-    </div>
-
-    <!-- Modal de Configuración -->
-    <div class="modal-overlay settings-modal" id="settingsModal">
-        <div class="modal-container settings-container">
-            <!-- Contenido de configuración se cargará dinámicamente -->
-        </div>
-    </div>
-
-    <!-- Scripts -->
-    <script src="config.js"></script>
-    <script src="api.js"></script>
-    <script src="library.js"></script>
-    <script src="perfil.js"></script>
-    <script src="script.js"></script>
+<body>
+<div class="login-screen active" id="loginScreen">
+<div class="login-container">
+<div class="login-header">
+<i class="fas fa-ticket-alt"></i>
+<h1>Cartel TV Premium</h1>
+<p>Acceso por ticket</p>
+</div>
+<div class="login-form" id="loginFormContainer">
+<h2><i class="fas fa-key"></i> Acceder</h2>
+<div class="ticket-input">
+<input type="text" id="ticketInput" placeholder="Ingresa tu ticket" required>
+<button id="loginSubmit"><i class="fas fa-sign-in-alt"></i> Acceder</button>
+</div>
+<div class="ticket-divider">
+<span>¿No tienes ticket?</span>
+</div>
+<button id="generateTicket" class="ticket-generate">
+<i class="fas fa-plus-circle"></i>Tener Ticket
+</button>
+<div class="ticket-info">
+<p><i class="fas fa-info-circle"></i> Tu ticket será enviado para aprobación</p>
+</div>
+</div>
+<div class="login-notification" id="loginNotification"></div>
+</div>
+</div>
+<nav class="navbar">
+<div class="nav-left">
+<div class="nav-logo">
+<i class="fas fa-tv"></i>
+<span>CartelTV</span>
+</div>
+<div class="nav-links">
+<a href="#" class="nav-link active" data-section="home"><i class="fas fa-home"></i><span>Inicio</span></a>
+<a href="#" class="nav-link" data-section="movies"><i class="fas fa-film"></i><span>Películas</span></a>
+<a href="#" class="nav-link" data-section="series"><i class="fas fa-tv"></i><span>Series</span></a>
+<a href="#" class="nav-link" data-section="anime"><i class="fas fa-dragon"></i><span>Anime</span></a>
+<a href="#" class="nav-link" data-section="library"><i class="fas fa-bookmark"></i><span>Biblioteca</span></a>
+</div>
+</div>
+<div class="nav-right">
+<button class="nav-icon search-toggle"><i class="fas fa-search"></i></button>
+<button class="nav-icon" id="modeToggle"><i class="fas fa-moon"></i></button>
+<div class="user-dropdown">
+<button class="user-btn"><i class="fas fa-user-circle"></i><span id="userName">Usuario</span><i class="fas fa-chevron-down"></i></button>
+<div class="dropdown-menu">
+<a href="#" data-section="profile"><i class="fas fa-user"></i>Perfil</a>
+<a href="#" data-section="config"><i class="fas fa-cog"></i>Configuración</a>
+<hr>
+<a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i>Cerrar Sesión</a>
+</div>
+</div>
+</div>
+</nav>
+<div class="search-overlay">
+<div class="search-container">
+<input type="text" id="globalSearch" placeholder="Buscar películas, series, anime...">
+<select id="searchCategory">
+<option value="multi">Todo</option>
+<option value="movie">Películas</option>
+<option value="tv">Series</option>
+<option value="anime">Anime</option>
+</select>
+<button id="searchAction"><i class="fas fa-search"></i></button>
+<button class="close-search"><i class="fas fa-times"></i></button>
+</div>
+<div class="search-results" id="searchResults"></div>
+</div>
+<div class="mode-selector" id="modeSelector">
+<div class="mode-modal">
+<h3><i class="fas fa-sliders-h"></i> Modo de Contenido</h3>
+<div class="mode-grid">
+<div class="mode-card" data-mode="tmdb">
+<div class="mode-icon"><i class="fas fa-film"></i></div>
+<h4>Películas & Series</h4>
+<p>Contenido tradicional occidental</p>
+</div>
+<div class="mode-card" data-mode="anime">
+<div class="mode-icon"><i class="fas fa-dragon"></i></div>
+<h4>Anime</h4>
+<p>Animación japonesa</p>
+</div>
+<div class="mode-card" data-mode="mixed">
+<div class="mode-icon"><i class="fas fa-blender"></i></div>
+<h4>Mixto</h4>
+<p>Combinación de ambos</p>
+</div>
+</div>
+<button class="mode-confirm">Confirmar Selección</button>
+</div>
+</div>
+<main class="main-content">
+<section id="homeSection" class="content-section active">
+<div class="hero-banner">
+<div class="hero-text">
+<h1>Cartel TV Premium</h1>
+<p>Streaming Exclucivo</p>
+<button class="hero-cta" id="exploreContent"><i class="fas fa-play"></i> Explorar</button>
+</div>
+</div>
+<div class="content-section-inner">
+<div class="section-header">
+<h2><i class="fas fa-fire"></i> Tendencias</h2>
+<button class="section-filter"><i class="fas fa-filter"></i></button>
+</div>
+<div class="content-scroller" id="trendingScroller"></div>
+<div class="section-header">
+<h2><i class="fas fa-star"></i> Películas Populares</h2>
+<button class="section-filter"><i class="fas fa-filter"></i></button>
+</div>
+<div class="content-grid" id="moviesGrid"></div>
+<div class="section-header">
+<h2><i class="fas fa-broadcast-tower"></i> Series Destacadas</h2>
+<button class="section-filter"><i class="fas fa-filter"></i></button>
+</div>
+<div class="content-grid" id="seriesGrid"></div>
+<div class="section-header">
+<h2><i class="fas fa-dragon"></i> Top Anime</h2>
+<button class="section-filter"><i class="fas fa-filter"></i></button>
+</div>
+<div class="content-grid" id="animeGrid"></div>
+</div>
+</section>
+<section id="moviesSection" class="content-section">
+<div class="section-tools">
+<h1><i class="fas fa-film"></i> Películas</h1>
+<div class="filter-bar">
+<select id="filterMovieGenre">
+<option value="">Género</option>
+</select>
+<select id="filterMovieYear">
+<option value="">Año</option>
+</select>
+<select id="filterMovieSort">
+<option value="popularity.desc">Popularidad</option>
+<option value="vote_average.desc">Mejor Valoradas</option>
+<option value="release_date.desc">Más Recientes</option>
+</select>
+</div>
+</div>
+<div class="content-container" id="moviesContainer"></div>
+</section>
+<section id="seriesSection" class="content-section">
+<div class="section-tools">
+<h1><i class="fas fa-tv"></i> Series</h1>
+<div class="filter-bar">
+<select id="filterSeriesGenre">
+<option value="">Género</option>
+</select>
+<select id="filterSeriesYear">
+<option value="">Año</option>
+</select>
+<select id="filterSeriesStatus">
+<option value="">Estado</option>
+<option value="0">En emisión</option>
+<option value="1">Finalizada</option>
+</select>
+</div>
+</div>
+<div class="content-container" id="seriesContainer"></div>
+</section>
+<section id="animeSection" class="content-section">
+<div class="section-tools">
+<h1><i class="fas fa-dragon"></i> Anime</h1>
+<div class="filter-bar">
+<select id="filterAnimeType">
+<option value="">Tipo</option>
+<option value="tv">TV</option>
+<option value="movie">Película</option>
+<option value="ova">OVA</option>
+</select>
+<select id="filterAnimeStatus">
+<option value="">Estado</option>
+<option value="airing">En emisión</option>
+<option value="complete">Completado</option>
+</select>
+<select id="filterAnimeRating">
+<option value="">Rating</option>
+<option value="g">G</option>
+<option value="pg">PG</option>
+<option value="pg13">PG-13</option>
+</select>
+</div>
+</div>
+<div class="content-container" id="animeContainer"></div>
+</section>
+<section id="librarySection" class="content-section">
+<div class="section-tools">
+<h1><i class="fas fa-bookmark"></i> Biblioteca</h1>
+<div class="library-tabs">
+<button class="tab-btn active" data-tab="watchlist"><i class="fas fa-clock"></i> Por Ver</button>
+<button class="tab-btn" data-tab="watched"><i class="fas fa-eye"></i> Vistos</button>
+<button class="tab-btn" data-tab="favorites"><i class="fas fa-heart"></i> Favoritos</button>
+<button class="tab-btn" data-tab="recommendations"><i class="fas fa-star"></i> Recomendados</button>
+</div>
+</div>
+<div class="library-content" id="libraryContent"></div>
+</section>
+<section id="profileSection" class="content-section">
+<div class="profile-wrapper">
+<div class="profile-sidebar">
+<div class="profile-avatar">
+<div class="avatar-img"><i class="fas fa-user-circle"></i></div>
+<button class="avatar-edit"><i class="fas fa-camera"></i></button>
+</div>
+<h3 id="profileDisplayName">Usuario</h3>
+<div class="profile-stats">
+<div class="stat-box">
+<div class="stat-number" id="statMovies">0</div>
+<div class="stat-label">Películas</div>
+</div>
+<div class="stat-box">
+<div class="stat-number" id="statSeries">0</div>
+<div class="stat-label">Series</div>
+</div>
+<div class="stat-box">
+<div class="stat-number" id="statAnime">0</div>
+<div class="stat-label">Anime</div>
+</div>
+</div>
+</div>
+<div class="profile-main">
+<h2><i class="fas fa-user-cog"></i> Configuración de Perfil</h2>
+<form id="profileForm">
+<div class="form-row">
+<div class="form-group">
+<label for="profileName">Nombre</label>
+<input type="text" id="profileName" required>
+</div>
+<div class="form-group">
+<label for="profileEmail">Email</label>
+<input type="email" id="profileEmail" required>
+</div>
+</div>
+<div class="form-row">
+<div class="form-group">
+<label for="profileLanguage">Idioma</label>
+<select id="profileLanguage">
+<option value="es-ES">Español</option>
+<option value="en-US">Inglés</option>
+<option value="ja-JP">Japonés</option>
+</select>
+</div>
+<div class="form-group">
+<label for="profileRegion">Región</label>
+<select id="profileRegion">
+<option value="ES">España</option>
+<option value="MX">México</option>
+<option value="US">EE.UU.</option>
+<option value="JP">Japón</option>
+</select>
+</div>
+</div>
+<button type="submit" class="form-submit"><i class="fas fa-save"></i> Guardar Cambios</button>
+</form>
+</div>
+</div>
+</section>
+<section id="configSection" class="content-section">
+<div class="config-wrapper">
+<h1><i class="fas fa-cogs"></i> Configuración</h1>
+<div class="config-sections">
+<div class="config-card">
+<h3><i class="fas fa-eye"></i> Preferencias de Visualización</h3>
+<div class="config-options">
+<label class="config-switch">
+<input type="checkbox" id="prefMovies" checked>
+<span class="switch-slider"></span>
+<span class="switch-label">Mostrar Películas</span>
+</label>
+<label class="config-switch">
+<input type="checkbox" id="prefSeries" checked>
+<span class="switch-slider"></span>
+<span class="switch-label">Mostrar Series</span>
+</label>
+<label class="config-switch">
+<input type="checkbox" id="prefAnime" checked>
+<span class="switch-slider"></span>
+<span class="switch-label">Mostrar Anime</span>
+</label>
+<label class="config-switch">
+<input type="checkbox" id="prefAdult">
+<span class="switch-slider"></span>
+<span class="switch-label">Contenido Adulto</span>
+</label>
+</div>
+</div>
+<div class="config-card">
+<h3><i class="fas fa-video"></i> Calidad de Reproducción</h3>
+<div class="config-options">
+<select id="configQuality" class="config-select">
+<option value="auto">Auto</option>
+<option value="1080">1080p</option>
+<option value="720">720p</option>
+<option value="480">480p</option>
+</select>
+</div>
+</div>
+<div class="config-card">
+<h3><i class="fas fa-bell"></i> Notificaciones</h3>
+<div class="config-options">
+<label class="config-switch">
+<input type="checkbox" id="notifyNew" checked>
+<span class="switch-slider"></span>
+<span class="switch-label">Nuevos Episodios</span>
+</label>
+<label class="config-switch">
+<input type="checkbox" id="notifyRec" checked>
+<span class="switch-slider"></span>
+<span class="switch-label">Recomendaciones</span>
+</label>
+<label class="config-switch">
+<input type="checkbox" id="notifyNews">
+<span class="switch-slider"></span>
+<span class="switch-label">Noticias</span>
+</label>
+</div>
+</div>
+</div>
+<button class="config-save" id="saveConfig"><i class="fas fa-check"></i> Aplicar Configuración</button>
+</div>
+</section>
+</main>
+<div class="media-modal" id="mediaModal">
+<div class="modal-content">
+<button class="modal-close"><i class="fas fa-times"></i></button>
+<div class="modal-body" id="modalBody"></div>
+</div>
+</div>
+<div class="notification" id="globalNotification"></div>
+<script src="api-tv.js"></script>
+<script src="api-anime.js"></script>
+<script src="config.js"></script>
+<script src="mode.js"></script>
+<script src="library.js"></script>
+<script src="login.js"></script>
+<script src="perfil.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

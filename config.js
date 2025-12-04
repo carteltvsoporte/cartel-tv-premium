@@ -1,65 +1,16 @@
-const APP_CONFIG = {
-    theme: 'dark',
-    language: 'es',
-    autoplayTrailers: false,
-    adultContent: false,
-    notifications: true,
-    quality: 'hd',
-    autoNextEpisode: true,
-    dataSaving: false,
-    subtitleLanguage: 'es',
-    audioLanguage: 'es',
-    videoPlayer: 'html5',
-    cacheDuration: 24,
-    defaultView: 'grid',
-    animationEffects: true
-};
-
-class ConfigManager {
-    constructor() {
-        this.config = this.loadConfig();
-    }
-
-    loadConfig() {
-        try {
-            const saved = localStorage.getItem('ctvp_config');
-            return saved ? { ...APP_CONFIG, ...JSON.parse(saved) } : APP_CONFIG;
-        } catch {
-            return APP_CONFIG;
-        }
-    }
-
-    saveConfig(newConfig) {
-        this.config = { ...this.config, ...newConfig };
-        localStorage.setItem('ctvp_config', JSON.stringify(this.config));
-        this.applyConfig();
-    }
-
-    applyConfig() {
-        document.documentElement.setAttribute('data-theme', this.config.theme);
-        document.documentElement.setAttribute('lang', this.config.language);
-        
-        if (this.config.animationEffects) {
-            document.body.classList.add('animations-enabled');
-        } else {
-            document.body.classList.remove('animations-enabled');
-        }
-    }
-
-    get(key) {
-        return this.config[key];
-    }
-
-    set(key, value) {
-        this.config[key] = value;
-        this.saveConfig({ [key]: value });
-    }
-
-    reset() {
-        localStorage.removeItem('ctvp_config');
-        this.config = APP_CONFIG;
-        this.applyConfig();
-    }
-}
-
-const configManager = new ConfigManager();
+class ConfigSystem{
+constructor(){this.defaultConfig={content:{showMovies:true,showSeries:true,showAnime:true,showAdult:false},ui:{theme:"dark",language:"es-ES",region:"ES"},notifications:{newEpisodes:true,recommendations:true,news:false},playback:{quality:"auto"},contentMode:"mixed"};this.currentConfig=this.loadConfig();this.initializeConfig();}
+loadConfig(){const saved=localStorage.getItem("carteltv_config");return saved?{...this.defaultConfig,...JSON.parse(saved)}:this.defaultConfig;}
+initializeConfig(){this.applyConfig();this.setupEventListeners();}
+setupEventListeners(){document.getElementById("saveConfig")?.addEventListener("click",()=>this.saveFromUI());document.getElementById("modeToggle")?.addEventListener("click",()=>this.toggleTheme());["prefMovies","prefSeries","prefAnime","prefAdult","notifyNew","notifyRec","notifyNews"].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener("change",()=>this.updateConfig());});document.getElementById("configQuality")?.addEventListener("change",()=>this.updateConfig());}
+applyConfig(){document.documentElement.setAttribute("data-theme",this.currentConfig.ui.theme);this.updateUI();this.applyContentMode();}
+updateUI(){document.getElementById("prefMovies").checked=this.currentConfig.content.showMovies;document.getElementById("prefSeries").checked=this.currentConfig.content.showSeries;document.getElementById("prefAnime").checked=this.currentConfig.content.showAnime;document.getElementById("prefAdult").checked=this.currentConfig.content.showAdult;document.getElementById("notifyNew").checked=this.currentConfig.notifications.newEpisodes;document.getElementById("notifyRec").checked=this.currentConfig.notifications.recommendations;document.getElementById("notifyNews").checked=this.currentConfig.notifications.news;document.getElementById("configQuality").value=this.currentConfig.playback.quality;const themeIcon=document.querySelector("#modeToggle i");themeIcon.className=this.currentConfig.ui.theme==="dark"?"fas fa-moon":"fas fa-sun";}
+saveFromUI(){this.currentConfig.content.showMovies=document.getElementById("prefMovies").checked;this.currentConfig.content.showSeries=document.getElementById("prefSeries").checked;this.currentConfig.content.showAnime=document.getElementById("prefAnime").checked;this.currentConfig.content.showAdult=document.getElementById("prefAdult").checked;this.currentConfig.notifications.newEpisodes=document.getElementById("notifyNew").checked;this.currentConfig.notifications.recommendations=document.getElementById("notifyRec").checked;this.currentConfig.notifications.news=document.getElementById("notifyNews").checked;this.currentConfig.playback.quality=document.getElementById("configQuality").value;this.saveConfig();this.showNotification("Configuración guardada","success");}
+updateConfig(){this.saveFromUI();}
+toggleTheme(){this.currentConfig.ui.theme=this.currentConfig.ui.theme==="dark"?"light":"dark";this.saveConfig();this.applyConfig();}
+applyContentMode(){const mode=this.currentConfig.contentMode;["movies","series","anime"].forEach(section=>{const shouldShow=mode==="mixed"||(mode==="tmdb"&&section!=="anime")||(mode==="anime"&&section==="anime");const navLink=document.querySelector(`.nav-link[data-section="${section}"]`);if(navLink)navLink.style.display=shouldShow?"flex":"none";});}
+saveConfig(){localStorage.setItem("carteltv_config",JSON.stringify(this.currentConfig));document.dispatchEvent(new CustomEvent("configUpdated",{detail:{config:this.currentConfig}}));}
+showNotification(message,type="info"){const notification=document.getElementById("globalNotification");notification.textContent=message;notification.style.background=type==="success"?"var(--success)":type==="error"?"var(--accent)":"var(--primary)";notification.style.display="block";setTimeout(()=>{notification.style.display="none";},3000);}
+getConfig(){return this.currentConfig;}
+updateSection(section,updates){if(this.currentConfig[section]){this.currentConfig[section]={...this.currentConfig[section],...updates};this.saveConfig();return true;}return false;}}
+window.configSystem=new ConfigSystem();
