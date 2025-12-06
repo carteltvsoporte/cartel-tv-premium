@@ -2,207 +2,257 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-    <title>CARTEL TV - Streaming de Anime, Películas y Series</title>
-    <meta name="description" content="Plataforma de streaming con contenido actualizado de APIs reales. Anime, películas, series y más.">
-    <meta name="theme-color" content="#6a11cb">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CARTEL TV - Plataforma multimedia con series, anime y noticias">
+    <title>CARTEL - TV</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=128&q=80">
-    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📺</text></svg>">
 </head>
 <body>
-    <!-- Overlay de Autenticación -->
-    <div class="auth-overlay" id="authOverlay">
-        <div class="auth-container">
-            <div class="logo-svg">
-                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=60&h=60&q=80" 
-                     alt="CARTEL TV Logo" 
-                     style="width: 60px; height: 60px; border-radius: 12px;">
+    <div id="login-overlay" class="login-overlay">
+        <div class="login-container">
+            <div class="login-header">
+                <h1><i class="fas fa-ticket-alt"></i> CARTEL TV</h1>
+                <p>Accede a las últimas noticias de multimedia</p>
             </div>
-            <h1 class="auth-title">CARTEL TV</h1>
-            <input type="text" class="auth-input" id="usernameInput" placeholder="Nombre de usuario" autocomplete="username">
-            <div class="auth-error" id="usernameError">Usuario no autorizado</div>
-            <input type="password" class="auth-input" id="ticketInput" placeholder="Ticket de acceso" autocomplete="current-password">
-            <div class="auth-error" id="ticketError">Ticket incorrecto</div>
-            <button class="auth-btn" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Acceder</button>
-            <div class="demo-credentials" style="margin-top: 20px; color: var(--light-gray); font-size: 0.8rem;">
-                <p>CTVP</p>
+            <div class="login-form">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" placeholder="Nombre de usuario" aria-label="Nombre de usuario">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-key"></i>
+                    <input type="password" id="password" placeholder="Contraseña" aria-label="Contraseña">
+                </div>
+                <button id="login-btn" class="login-btn">Acceder a la plataforma</button>
+                <div id="login-message" class="login-message" role="alert" aria-live="polite"></div>
             </div>
         </div>
     </div>
 
-    <!-- Header Principal -->
-    <header class="header" id="mainHeader" style="display:none;" role="banner" aria-label="Cabecera principal">
-        <div class="nav-container">
-            <div class="logo">
-                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=32&h=32&q=80" 
-                     alt="CARTEL TV Logo" 
-                     style="width: 32px; height: 32px; border-radius: 8px;">
-                <span>CARTEL TV</span>
-            </div>
-
-            <!-- Barra de Búsqueda -->
-            <div class="search-container">
-                <div class="search-wrapper">
-                    <i class="fas fa-search search-icon" aria-hidden="true"></i>
-                    <input type="text" class="search-input" id="searchInput" 
-                           placeholder="Buscar películas, series, anime..." 
-                           aria-label="Buscar contenido">
+    <div id="main-platform" class="main-platform hidden">
+        <header class="header">
+            <div class="header-container">
+                <div class="logo">
+                    <h1><i class="fas fa-tv"></i> CARTEL TV</h1>
+                    <p class="tagline">Todas las noticias multimedia en un solo lugar</p>
+                </div>
+                <div class="user-info">
+                    <div class="user-profile">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="current-user">Usuario</span>
+                        <button id="logout-btn" class="logout-btn">Cerrar sesión</button>
+                    </div>
+                    <div class="current-time">
+                        <i class="fas fa-clock"></i>
+                        <span id="datetime">Cargando...</span>
+                    </div>
                 </div>
             </div>
+        </header>
 
-            <!-- Navegación -->
-            <nav class="nav-links" role="navigation" aria-label="Navegación principal">
-                <a href="#" class="nav-link active" data-section="home" role="tab" aria-selected="true" aria-controls="mainContent">
-                    <i class="fas fa-home" aria-hidden="true"></i>
-                    <span class="nav-text"></span>
-                </a>
-                <a href="#" class="nav-link" data-section="anime" role="tab" aria-selected="false" aria-controls="mainContent">
-                    <i class="fas fa-ghost" aria-hidden="true"></i>
-                    <span class="nav-text"></span>
-                </a>
-                <a href="#" class="nav-link" data-section="movies" role="tab" aria-selected="false" aria-controls="mainContent">
-                    <i class="fas fa-video" aria-hidden="true"></i>
-                    <span class="nav-text"></span>
-                </a>
-                <a href="#" class="nav-link" data-section="tv" role="tab" aria-selected="false" aria-controls="mainContent">
-                    <i class="fas fa-tv" aria-hidden="true"></i>
-                    <span class="nav-text"></span>
-                </a>
-                <a href="#" class="nav-link" data-section="integrated" role="tab" aria-selected="false" aria-controls="mainContent">
-                    <i class="fas fa-random" aria-hidden="true"></i>
-                    <span class="nav-text"></span>
-                </a>
-                <a href="#" class="nav-link" data-section="documentaries" role="tab" aria-selected="false" aria-controls="mainContent">
-                    <i class="fas fa-file-video" aria-hidden="true"></i>
-                    <span class="nav-text"></span>
-                </a>
-                <a href="#" class="nav-link" data-section="kids" role="tab" aria-selected="false" aria-controls="mainContent">
-                    <i class="fas fa-child" aria-hidden="true"></i>
-                    <span class="nav-text"></span>
-                </a>
-            </nav>
-
-            <!-- Menú Usuario -->
-            <div class="user-menu">
-                <div class="user-avatar" id="userAvatar" title="Mi lista de seguimiento" role="button" aria-label="Ver mi lista">
-                    <span id="avatarInitials">US</span>
-                    <div class="watchlist-counter" id="watchlistCounter" style="display: none;" aria-live="polite">0</div>
+        <nav class="navbar" role="navigation" aria-label="Navegación principal">
+            <div class="container">
+                <ul class="nav-menu">
+                    <li><a href="#" class="nav-link active" data-section="home" aria-current="page"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="#" class="nav-link" data-section="tv"><i class="fas fa-film"></i> Series TV</a></li>
+                    <li><a href="#" class="nav-link" data-section="anime"><i class="fas fa-dragon"></i> Anime</a></li>
+                    <li><a href="#" class="nav-link" data-section="news"><i class="fas fa-newspaper"></i> Noticias</a></li>
+                    <li><a href="#" class="nav-link" data-section="trending"><i class="fas fa-chart-line"></i> Trending</a></li>
+                </ul>
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Buscar series, anime, noticias..." aria-label="Buscar contenido">
+                    <button id="search-btn" aria-label="Buscar"><i class="fas fa-search"></i></button>
                 </div>
             </div>
-        </div>
-    </header>
+        </nav>
 
-    <!-- Contenido Principal -->
-    <main class="main-container" id="mainContent" style="display:none;" role="main">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Bienvenido, <span id="welcomeUser">Usuario</span></h1>
-                <p>Contenido actualizado en tiempo real desde TMDB, Jikan y otras APIs. Recomendaciones personalizadas basadas en tus preferencias.</p>
-                <div class="hero-buttons">
-                    <button class="btn btn-primary" id="exploreBtn">
-                        <i class="fas fa-compass" aria-hidden="true"></i> Explorar Todo
-                    </button>
-                    <button class="btn btn-secondary" id="randomBtn">
-                        <i class="fas fa-random" aria-hidden="true"></i> Recomendación Aleatoria
-                    </button>
-                    <button class="btn btn-secondary" id="watchlistBtn">
-                        <i class="fas fa-bookmark" aria-hidden="true"></i> Mi Lista
-                    </button>
+        <main class="main-content" role="main">
+            <div class="container">
+                <section id="home-section" class="content-section active">
+                    <div class="section-header">
+                        <h2><i class="fas fa-star"></i> Destacado de Hoy</h2>
+                        <p>Lo más relevante en el mundo multimedia</p>
+                    </div>
+                    
+                    <div class="hero-banner">
+                        <div class="hero-content">
+                            <h3>Bienvenido a <span class="highlight">CARTEL TV</span></h3>
+                            <p>Tu plataforma para seguir las últimas noticias de series de TV, anime y entretenimiento multimedia.</p>
+                            <div class="hero-stats">
+                                <div class="stat">
+                                    <i class="fas fa-film"></i>
+                                    <span id="total-shows">0</span>
+                                    <p>Series disponibles</p>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-dragon"></i>
+                                    <span id="total-anime">0</span>
+                                    <p>Animes en catálogo</p>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-newspaper"></i>
+                                    <span id="total-news">0</span>
+                                    <p>Noticias publicadas</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-links">
+                        <div class="link-card" data-section="tv" role="button" tabindex="0">
+                            <i class="fas fa-tv"></i>
+                            <h4>Series de TV</h4>
+                            <p>Explora las últimas series y episodios</p>
+                        </div>
+                        <div class="link-card" data-section="anime" role="button" tabindex="0">
+                            <i class="fas fa-dragon"></i>
+                            <h4>Anime</h4>
+                            <p>Descubre nuevos animes y temporadas</p>
+                        </div>
+                        <div class="link-card" data-section="news" role="button" tabindex="0">
+                            <i class="fas fa-newspaper"></i>
+                            <h4>Noticias</h4>
+                            <p>Mantente informado con lo último</p>
+                        </div>
+                        <div class="link-card" data-section="trending" role="button" tabindex="0">
+                            <i class="fas fa-fire"></i>
+                            <h4>Trending</h4>
+                            <p>Lo más popular esta semana</p>
+                        </div>
+                    </div>
+                    
+                    <div class="section-grid">
+                        <div class="content-card featured">
+                            <div class="card-header">
+                                <h3><i class="fas fa-broadcast-tower"></i> Series Estreno Esta Semana</h3>
+                            </div>
+                            <div id="featured-shows" class="card-content">
+                                <p>Cargando series destacadas...</p>
+                            </div>
+                        </div>
+                        
+                        <div class="content-card featured">
+                            <div class="card-header">
+                                <h3><i class="fas fa-play-circle"></i> Anime del Momento</h3>
+                            </div>
+                            <div id="featured-anime" class="card-content">
+                                <p>Cargando anime destacado...</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="tv-section" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-tv"></i> Series de TV</h2>
+                        <p>Explora las últimas series y episodios de TVMAZE</p>
+                    </div>
+                    
+                    <div class="filter-options" role="group" aria-label="Filtros de series">
+                        <button class="filter-btn active" data-filter="all">Todas</button>
+                    </div>
+                    
+                    <div class="content-grid" id="tv-shows-grid">
+                        <div class="loading-placeholder">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Cargando series de TV...</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="anime-section" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-dragon"></i> Anime</h2>
+                        <p>Descubre las últimas series y temporadas de anime</p>
+                    </div>
+                    
+                    <div class="filter-options" role="group" aria-label="Filtros de anime">
+                        <button class="filter-btn active" data-filter="all">Todos</button>
+                    </div>
+                    
+                    <div class="content-grid" id="anime-grid">
+                        <div class="loading-placeholder">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Cargando animes...</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="news-section" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-newspaper"></i> Noticias Multimedia</h2>
+                        <p>Mantente informado con las últimas novedades</p>
+                    </div>
+                    
+                    <div class="news-container" id="news-container">
+                        <div class="loading-placeholder">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Cargando noticias...</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="trending-section" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-chart-line"></i> Trending</h2>
+                        <p>Lo más popular en series y anime esta semana</p>
+                    </div>
+                    
+                    <div class="trending-container">
+                        <div class="trending-column">
+                            <h3><i class="fas fa-fire"></i> Series en Tendencia</h3>
+                            <div id="trending-shows">
+                                <p>Cargando series trending...</p>
+                            </div>
+                        </div>
+                        
+                        <div class="trending-column">
+                            <h3><i class="fas fa-rocket"></i> Anime en Tendencia</h3>
+                            <div id="trending-anime">
+                                <p>Cargando anime trending...</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer class="footer" role="contentinfo">
+            <div class="footer-container">
+                <div class="footer-logo">
+                    <h3><i class="fas fa-tv"></i> CARTEL TV</h3>
+                    <p>Tu plataforma multimedia de confianza</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Contenido</h4>
+                        <a href="#" data-section="tv">Series TV</a>
+                        <a href="#" data-section="anime">Anime</a>
+                        <a href="#" data-section="news">Noticias</a>
+                    </div> 
                 </div>
             </div>
-        </section>
-        
-        <!-- Resultados de Búsqueda -->
-        <div id="searchResults" class="search-results" style="display: none;" role="status" aria-live="polite"></div>
-        
-        <!-- Tabs de Contenido -->
-        <div class="content-tabs" role="tablist" aria-label="Categorías de contenido">
-            <button class="tab-btn active" data-tab="trending" role="tab" aria-selected="true" aria-controls="contentGrid">
-                <i class="fas fa-fire" aria-hidden="true"></i> Tendencia
-            </button>
-            <button class="tab-btn" data-tab="top-rated" role="tab" aria-selected="false" aria-controls="contentGrid">
-                <i class="fas fa-star" aria-hidden="true"></i> Mejor Valorado
-            </button>
-            <button class="tab-btn" data-tab="upcoming" role="tab" aria-selected="false" aria-controls="contentGrid">
-                <i class="fas fa-calendar-alt" aria-hidden="true"></i> Próximamente
-            </button>
-            <button class="tab-btn" data-tab="now-playing" role="tab" aria-selected="false" aria-controls="contentGrid">
-                <i class="fas fa-play-circle" aria-hidden="true"></i> En Emisión
-            </button>
-        </div>
-        
-        <!-- Filtros -->
-        <section class="filter-section" aria-label="Filtros de contenido">
-            <div class="filter-group">
-                <label class="filter-label" for="genreFilter">Género</label>
-                <select class="filter-select" id="genreFilter" aria-label="Seleccionar género">
-                    <option value="all">Todos los géneros</option>
-                </select>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CARTEL TV.</p>
             </div>
-            <div class="filter-group">
-                <label class="filter-label" for="yearFilter">Año</label>
-                <select class="filter-select" id="yearFilter" aria-label="Seleccionar año">
-                    <option value="all">Todos los años</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label class="filter-label" for="sortFilter">Ordenar por</label>
-                <select class="filter-select" id="sortFilter" aria-label="Ordenar contenido por">
-                    <option value="popularity.desc">Popularidad</option>
-                    <option value="vote_average.desc">Puntuación</option>
-                    <option value="release_date.desc">Más Reciente</option>
-                    <option value="release_date.asc">Más Antiguo</option>
-                    <option value="title.asc">Título A-Z</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <button class="btn btn-primary" id="applyFilters">
-                    <i class="fas fa-filter" aria-hidden="true"></i> Aplicar Filtros
-                </button>
-                <button class="btn btn-secondary" id="resetFilters" style="margin-top: 8px;">
-                    <i class="fas fa-redo" aria-hidden="true"></i> Restablecer
-                </button>
-            </div>
-        </section>
-        
-        <!-- Grid de Contenido -->
-        <section class="content-grid" id="contentGrid" role="region" aria-label="Contenido multimedia">
-            <div class="loading" style="grid-column:1/-1;text-align:center;padding:50px;" role="status" aria-live="polite">
-                <div class="loading-spinner"></div>
-                <p style="margin-top: 15px; color: var(--accent);">Cargando contenido...</p>
-            </div>
-        </section>
-        
-        <!-- Paginación -->
-        <div class="pagination" id="pagination" style="display: none; text-align: center; margin-bottom: 40px;" role="navigation" aria-label="Paginación">
-            <button class="btn btn-secondary" id="prevPage" disabled>
-                <i class="fas fa-chevron-left" aria-hidden="true"></i> Anterior
-            </button>
-            <span id="pageInfo" style="margin: 0 20px; color: var(--light);">Página 1</span>
-            <button class="btn btn-secondary" id="nextPage">
-                Siguiente <i class="fas fa-chevron-right" aria-hidden="true"></i>
-            </button>
-        </div>
-    </main>
+        </footer>
+    </div>
 
-    <!-- Modal de Detalles -->
-    <div class="modal" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+    <div id="detail-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
         <div class="modal-content">
-            <button class="modal-close" id="closeModal" aria-label="Cerrar modal">
-                <i class="fas fa-times" aria-hidden="true"></i>
-            </button>
-            <div class="modal-body" id="modalBody"></div>
+            <span class="close-modal" tabindex="0" role="button" aria-label="Cerrar">&times;</span>
+            <div id="modal-body"></div>
         </div>
     </div>
-    
-    <!-- Toast Notifications -->
-    <div class="toast" id="toast" role="alert" aria-live="polite" aria-atomic="true"></div>
-    
-    <!-- Scripts -->
+
+    <script src="ticket-login.js"></script>
+    <script src="api-tvmaze.js"></script>
+    <script src="api-jikan.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
